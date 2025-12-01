@@ -1,0 +1,96 @@
+/* Estilos específicos para la sección Explorar dentro del SPA */
+
+.explore-section {
+  width: 100%;
+  text-align: center;
+}
+
+.explore-section h1 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 5px;
+  margin-top: 20px;
+  letter-spacing: 1px;
+}
+
+.explore-controls {
+  max-width: 700px;
+  margin: 0 auto 20px auto;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#explore-search {
+  flex: 1;
+  min-width: 200px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 2px solid var(--accent1);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.08);
+}
+
+#explore-search:focus {
+  border-color: var(--accent2);
+  box-shadow: 0 0 12px rgba(255, 0, 200, 0.12);
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+}
+
+.explore-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 40px auto;
+}
+
+.explore-card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 0 14px rgba(0, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.explore-card:hover {
+  box-shadow: 0 0 20px rgba(255, 0, 200, 0.18);
+  transform: translateY(-2px);
+}
+
+.explore-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.explore-card h3 {
+  margin: 0;
+  color: var(--accent1);
+  font-size: 1.1rem;
+}
+
+.explore-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  flex-grow: 1;
+}
+

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pixel & Frames</title>
+  <meta name="description" content="Pixel & Frames - Recomendaciones que conectan videojuegos y cine, estilo cyberpunk." />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="logo-container">
+      <svg width="100" height="100" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#ff00c8;stop-opacity:1" />
+          </linearGradient>
+          <filter id="logoGlow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        
+        <g filter="url(#logoGlow)">
+          <circle cx="100" cy="100" r="60" fill="none" stroke="url(#logoGrad)" stroke-width="3"/>
+          <circle cx="100" cy="100" r="55" fill="none" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.5"/>
+          
+          <line x1="100" y1="20" x2="100" y2="30" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round"/>
+          <line x1="142" y1="34" x2="135" y2="41" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="166" y1="58" x2="159" y2="65" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="180" y1="100" x2="170" y2="100" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round"/>
+          <line x1="166" y1="142" x2="159" y2="135" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="142" y1="166" x2="135" y2="159" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="100" y1="180" x2="100" y2="170" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round"/>
+          <line x1="58" y1="166" x2="65" y2="159" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="34" y1="142" x2="41" y2="135" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="20" y1="100" x2="30" y2="100" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round"/>
+          <line x1="34" y1="58" x2="41" y2="65" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="58" y1="34" x2="65" y2="41" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round"/>
+          
+          <rect x="70" y="70" width="60" height="35" rx="3" fill="none" stroke="url(#logoGrad)" stroke-width="2.5"/>
+          
+          <path d="M 75 120 Q 75 115 80 115 L 120 115 Q 125 115 125 120 L 125 125 Q 125 132 120 132 L 80 132 Q 75 132 75 125 Z" 
+                fill="none" stroke="url(#logoGrad)" stroke-width="2.5"/>
+          
+          <line x1="85" y1="123" x2="90" y2="123" stroke="url(#logoGrad)" stroke-width="2"/>
+          <line x1="87.5" y1="120.5" x2="87.5" y2="125.5" stroke="url(#logoGrad)" stroke-width="2"/>
+          
+          <circle cx="110" cy="120" r="2.5" fill="url(#logoGrad)"/>
+          <circle cx="116" cy="123" r="2.5" fill="url(#logoGrad)"/>
+          <circle cx="110" cy="126" r="2.5" fill="url(#logoGrad)"/>
+          <circle cx="104" cy="123" r="2.5" fill="url(#logoGrad)"/>
+        </g>
+      </svg>
+    </div>
+
+      <ul class="nav-list">
+      <li class="nav-item" title="Inicio" role="button" tabindex="0" aria-pressed="false"><span class="nav-icon">🏠</span><span class="nav-text">Inicio</span></li>
+      <li class="nav-item" title="Búsqueda" role="button" tabindex="0" aria-pressed="false"><span class="nav-icon">🔎</span><span class="nav-text">Búsqueda</span></li>
+      <li class="nav-item" title="Explorar" role="button" tabindex="0" aria-pressed="false"><span class="nav-icon">✨</span><span class="nav-text">Explorar</span></li>
+      <li class="nav-item" title="Mensajería" role="button" tabindex="0" aria-pressed="false"><span class="nav-icon">💬</span><span class="nav-text">Mensajería</span></li>
+      <li class="nav-item" title="Notificaciones" role="button" tabindex="0" aria-pressed="false"><span class="nav-icon">🔔</span><span class="nav-text">Notificaciones</span></li>
+      <li class="nav-item" title="Crear" role="button" tabindex="0" aria-pressed="false"><span class="nav-icon">➕</span><span class="nav-text">Crear</span></li>
+      <li class="nav-item" title="Perfil" role="button" tabindex="0" aria-pressed="false"><span class="nav-icon">👤</span><span class="nav-text">Perfil</span></li>
+      <li class="nav-item" title="Más" role="button" tabindex="0" aria-pressed="false"><span class="nav-icon">⋯</span><span class="nav-text">Más</span></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <h1>PIXEL & FRAMES</h1>
+    <p class="subtitle">Una comunidad hecha por fans, para fans.</p>
+    <div class="search-container">
+      <input type="text" id="search" placeholder="Busca un videojuego o película..." oninput="filterContent()" />
+    </div>
+    
+    <div class="controls">
+      <button onclick="flipAll()" class="flip-btn">🔄 Voltear Todas</button>
+      <button onclick="showGames()" class="mode-btn">🎮 Ver Videojuegos</button>
+      <button onclick="showMovies()" class="mode-btn">🎬 Ver Películas</button>
+    </div>
+
+    <div class="results" id="results"></div>
+
+    <footer>© <span id="year"></span> Pixel & Frames — Donde los videojuegos se encuentran con el cine.</footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
