@@ -1,5 +1,26 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// Theme Toggle Functionality
+const themeToggle = document.getElementById('theme-toggle');
+const htmlElement = document.documentElement;
+const body = document.body;
+
+// Cargar tema guardado
+const savedTheme = localStorage.getItem('theme') || 'dark';
+if (savedTheme === 'light') {
+  body.classList.add('light-mode');
+  themeToggle.textContent = '☀️';
+}
+
+themeToggle.addEventListener('click', () => {
+  body.classList.toggle('light-mode');
+  const isLightMode = body.classList.contains('light-mode');
+  
+  // Cambiar icono y guardar preferencia
+  themeToggle.textContent = isLightMode ? '☀️' : '🌙';
+  localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
+});
+
 const data = [
   {
     juego: 'GTA VI',
@@ -83,6 +104,85 @@ const data = [
   }
 ];
 
+// Array de Posts para el Feed
+const posts = [
+  {
+    id: 1,
+    author: '@CyberNeon',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=CyberNeon',
+    timestamp: 'Hace 2 horas',
+    frontTitle: '🎮 Cyberpunk 2077',
+    frontDesc: 'Acabo de terminar Cyberpunk 2077... ¡increíble! La historia es tan inmersiva que pierdes la noción del tiempo.',
+    frontImg: 'https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg',
+    backTitle: '🎬 Blade Runner 2049',
+    backDesc: 'Si te gustó Cyberpunk, debes ver esta. Explora un futuro distópico donde la línea entre humanos y replicantes se difumina.',
+    backImg: 'https://img.youtube.com/vi/gCcx85zbxz4/maxresdefault.jpg',
+    likes: 234,
+    comments: 45,
+    liked: false
+  },
+  {
+    id: 2,
+    author: '@GamingLegend',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=GamingLegend',
+    timestamp: 'Hace 4 horas',
+    frontTitle: '🎮 Red Dead Redemption 2',
+    frontDesc: 'Red Dead Redemption 2 sigue siendo el mejor juego de acción de la historia. Arthur Morgan es un personaje magistral.',
+    frontImg: 'https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg',
+    backTitle: '🎬 The Assassination of Jesse James',
+    backDesc: 'Drama western puro. Si disfrutaste RDR2, esta película te atrapará desde el primer segundo con su narrativa melancólica.',
+    backImg: 'https://img.youtube.com/vi/C7f-qGZpCjI/maxresdefault.jpg',
+    likes: 456,
+    comments: 78,
+    liked: false
+  },
+  {
+    id: 3,
+    author: '@CinemaLover',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=CinemaLover',
+    timestamp: 'Hace 6 horas',
+    frontTitle: '🎬 Blade Runner 2049',
+    frontDesc: 'Blade Runner 2049 es una obra de arte visual. Cada fotograma parece una pintura. Ridley Scott es un genio.',
+    frontImg: 'https://img.youtube.com/vi/gCcx85zbxz4/maxresdefault.jpg',
+    backTitle: '🎮 Cyberpunk 2077',
+    backDesc: 'Si amaste la atmósfera cyberpunk de BR2049, este juego es perfecto para ti. Night City te espera.',
+    backImg: 'https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg',
+    likes: 567,
+    comments: 92,
+    liked: false
+  },
+  {
+    id: 4,
+    author: '@PixelMaster',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=PixelMaster',
+    timestamp: 'Hace 8 horas',
+    frontTitle: '🎮 Hades',
+    frontDesc: 'Hades es adictivo. He jugado 200 horas y sigo queriendo más. El juego roguelike perfecto.',
+    frontImg: 'https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg',
+    backTitle: '🎬 Clash of the Titans',
+    backDesc: 'Si te encantó la mitología de Hades, esta aventura épica con dioses y monstruos es tu película.',
+    backImg: 'https://img.youtube.com/vi/T6DJcgm3wNY/maxresdefault.jpg',
+    likes: 345,
+    comments: 56,
+    liked: false
+  },
+  {
+    id: 5,
+    author: '@ActionJunkie',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ActionJunkie',
+    timestamp: 'Hace 10 horas',
+    frontTitle: '🎮 GTA VI',
+    frontDesc: 'GTA VI será el juego más esperado del año. Vice City volverá con todo. ¡No puedo esperar!',
+    frontImg: 'https://img.youtube.com/vi/QdBZY2fkU-0/maxresdefault.jpg',
+    backTitle: '🎬 Heat',
+    backDesc: 'Si esperas GTA VI por sus atracos épicos, Heat es la película que necesitas. Clásico del cine criminal con Al Pacino.',
+    backImg: 'https://img.youtube.com/vi/2Gfetl9o2V8/maxresdefault.jpg',
+    likes: 678,
+    comments: 134,
+    liked: false
+  }
+];
+
 // No mantener referencia persistente a `#results` (se reemplaza al cargar/explorar)
 let currentMode = 'game'; // 'game' o 'movie'
 
@@ -143,6 +243,81 @@ function filterContent() {
   renderCards(filtered.length ? filtered : data);
 }
 
+function filterContentSidebar() {
+  const term = document.getElementById('search-sidebar').value.toLowerCase();
+  const filtered = posts.filter(p =>
+    p.author.toLowerCase().includes(term) || p.frontTitle.toLowerCase().includes(term) || p.backTitle.toLowerCase().includes(term)
+  );
+  renderFeed(filtered.length ? filtered : posts);
+}
+
+// Render Feed
+function renderFeed(feedPosts = posts) {
+  const feedContainer = document.getElementById('feed');
+  if (!feedContainer) return;
+
+  feedContainer.innerHTML = '';
+  feedPosts.forEach((post, index) => {
+    const cardContainer = document.createElement('div');
+    cardContainer.className = 'post-card-container';
+    cardContainer.innerHTML = `
+      <div class="post-card" data-index="${index}">
+        <div class="post-card-front">
+          <img src="${post.frontImg}" alt="${post.frontTitle}" onerror="this.src='https://via.placeholder.com/300x200/111122/00ffff?text=${encodeURIComponent(post.frontTitle)}'" />
+          <h3>${post.frontTitle}</h3>
+          <p>${post.frontDesc}</p>
+          <button class="flip-card-btn" onclick="flipPostCard(${index})">Ver recomendación ➜</button>
+          <div class="post-actions">
+            <div class="post-action ${post.liked ? 'liked' : ''}" onclick="toggleLike(${index})">
+              <span class="post-action-icon">${post.liked ? '❤️' : '🤍'}</span>
+              <span class="post-count">${post.likes}</span>
+            </div>
+            <div class="post-action">
+              <span class="post-action-icon">💬</span>
+              <span class="post-count">${post.comments}</span>
+            </div>
+            <div class="post-action">
+              <span class="post-action-icon">↗️</span>
+            </div>
+          </div>
+        </div>
+        <div class="post-card-back">
+          <img src="${post.backImg}" alt="${post.backTitle}" onerror="this.src='https://via.placeholder.com/300x200/111122/ff00c8?text=${encodeURIComponent(post.backTitle)}'" />
+          <h3>${post.backTitle}</h3>
+          <p>${post.backDesc}</p>
+          <button class="flip-card-btn" onclick="flipPostCard(${index})">← Volver</button>
+          <div class="post-actions">
+            <div class="post-action ${post.liked ? 'liked' : ''}" onclick="toggleLike(${index})">
+              <span class="post-action-icon">${post.liked ? '❤️' : '🤍'}</span>
+              <span class="post-count">${post.likes}</span>
+            </div>
+            <div class="post-action">
+              <span class="post-action-icon">💬</span>
+              <span class="post-count">${post.comments}</span>
+            </div>
+            <div class="post-action">
+              <span class="post-action-icon">↗️</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    feedContainer.appendChild(cardContainer);
+  });
+}
+
+function flipPostCard(index) {
+  const card = document.querySelector(`.post-card[data-index="${index}"]`);
+  if (!card) return;
+  card.classList.toggle('flipped');
+}
+
+function toggleLike(index) {
+  posts[index].liked = !posts[index].liked;
+  posts[index].likes += posts[index].liked ? 1 : -1;
+  renderFeed();
+}
+
 
 // Sidebar Navigation Functionality
 const navItems = document.querySelectorAll('.nav-item');
@@ -160,6 +335,15 @@ function handleNavClick(e) {
   this.classList.add('active');
   this.setAttribute('aria-pressed', 'true');
 
+  // Hide/show search box in sidebar
+  const searchBox = document.querySelector('.search-box-sidebar');
+  if (title === 'Búsqueda') {
+    searchBox.classList.add('active');
+    document.getElementById('search-sidebar').focus();
+  } else {
+    searchBox.classList.remove('active');
+  }
+
   switch (title) {
     case 'Inicio':
       // Restaurar la vista principal (home)
@@ -167,7 +351,7 @@ function handleNavClick(e) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       break;
     case 'Búsqueda':
-      document.getElementById('search').focus();
+      // Solo mostrar la búsqueda en el sidebar
       break;
     case 'Explorar':
       // Cargar la sección Explorar inline (SPA sin salir de la página)
@@ -207,7 +391,7 @@ if (navItems.length) {
   navItems[0].setAttribute('aria-pressed', 'true');
 }
 
-renderCards(data);
+renderFeed();
 
 // --- Integración SPA para sección Explorar (sin salir de la página) ---
 
@@ -306,7 +490,7 @@ function restoreHomeSection() {
   const mainEl = document.querySelector('.main-content');
   if (!mainEl) return;
   mainEl.innerHTML = originalMainHTML;
-  renderCards(data);
+  renderFeed();
 }
 
 // --- Fin integración SPA ---
