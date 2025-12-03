@@ -136,21 +136,6 @@ const posts = [
     liked: false
   },
   {
-    id: 2,
-    author: '@GamingLegend',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=GamingLegend',
-    timestamp: 'Hace 4 horas',
-    frontTitle: '🎮 Red Dead Redemption 2',
-    frontDesc: 'Red Dead Redemption 2 sigue siendo el mejor juego de acción de la historia. Arthur Morgan es un personaje magistral.',
-    frontImg: 'https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg',
-    backTitle: '🎬 The Assassination of Jesse James',
-    backDesc: 'Drama western puro. Si disfrutaste RDR2, esta película te atrapará desde el primer segundo con su narrativa melancólica.',
-    backImg: 'https://m.media-amazon.com/images/M/MV5BMTY2NDI2MTc2NV5BMl5BanBnXkFtZTcwNjA2NTQzMw@@._V1_.jpg',
-    likes: 456,
-    comments: 78,
-    liked: false
-  },
-  {
     id: 3,
     author: '@CinemaLover',
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=CinemaLover',
@@ -163,21 +148,6 @@ const posts = [
     backImg: 'https://image.api.playstation.com/vulcan/ap/rnd/202111/3013/cKZ4tKNFj9C00giTzYtH8PF1.png',
     likes: 567,
     comments: 92,
-    liked: false
-  },
-  {
-    id: 4,
-    author: '@PixelMaster',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=PixelMaster',
-    timestamp: 'Hace 8 horas',
-    frontTitle: '🎮 Hades',
-    frontDesc: 'Hades es adictivo. He jugado 200 horas y sigo queriendo más. El juego roguelike perfecto.',
-    frontImg: 'https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg',
-    backTitle: '🎬 Clash of the Titans',
-    backDesc: 'Si te encantó la mitología de Hades, esta aventura épica con dioses y monstruos es tu película.',
-    backImg: 'https://imgs.search.brave.com/hxgTcZr0dFvWfp1MRGAJ2zXfPyePDmmvcnZ3qrqrDMU/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvODM0/NTkwOS5qcGc',
-    likes: 345,
-    comments: 56,
     liked: false
   },
   {
@@ -240,21 +210,6 @@ const posts = [
     comments: 203,
     liked: false
   },
-  {
-    id: 9,
-    author: '@MangaFan',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=MangaFan',
-    timestamp: 'Hace 18 horas',
-    frontTitle: '📺 Cowboy Bebop (Anime)',
-    frontDesc: 'Cowboy Bebop es atemporal. Jazz, space cowboys y filosofía existencial. Una joya del anime de los 90s.',
-    frontImg: 'https://alfabetajuega.com/hero/2023/03/cowboy-bebop-orden-cronologico.jpg?width=768&aspect_ratio=16:9&format=nowebp',
-    backTitle: '🎮 Mass Effect Trilogy',
-    backDesc: 'Si te gustó la exploración espacial y los personajes de Bebop, Mass Effect te dará eso y más. Épica espacial inolvidable.',
-    backImg: 'https://cdn.akamai.steamstatic.com/steam/apps/1328670/header.jpg',
-    likes: 743,
-    comments: 121,
-    liked: false
-  }
 ];
 
 // No mantener referencia persistente a `#results` (se reemplaza al cargar/explorar)
