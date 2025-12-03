@@ -1,0 +1,25 @@
+<!-- Contenido de la sección Mensajería (sin etiquetas html/body/head) -->
+<div class="messaging-section">
+  <div class="messaging-container">
+    <!-- Lista de conversaciones -->
+    <div class="conversations-list">
+      <h2>Mensajes</h2>
+      <input type="text" id="search-conversations" placeholder="Buscar conversaciones..." class="search-conversations" />
+      <div class="conversations" id="conversations-list"></div>
+    </div>
+
+    <!-- Área de chat -->
+    <div class="chat-area">
+      <div class="chat-header" id="chat-header">
+        <h3>Selecciona una conversación</h3>
+      </div>
+      <div class="messages-container" id="messages-container">
+        <p class="no-chat-selected">Selecciona un usuario para empezar a chatear</p>
+      </div>
+      <div class="message-input-area" id="message-input-area" style="display: none;">
+        <input type="text" id="message-input" placeholder="Escribe un mensaje..." />
+        <button id="send-btn" class="send-btn">↗️</button>
+      </div>
+    </div>
+  </div>
+</div>

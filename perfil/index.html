@@ -1,0 +1,49 @@
+<!-- Contenido de la sección Perfil (sin etiquetas html/body/head) -->
+<div class="profile-section">
+  <div class="profile-header">
+    <div class="profile-banner"></div>
+    <div class="profile-info-container">
+      <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=YourProfile" alt="Profile" class="profile-avatar" />
+      <div class="profile-details">
+        <h1 class="profile-name">Tu Nombre</h1>
+        <p class="profile-handle">@tuusuario</p>
+        <p class="profile-bio">Apasionado por los videojuegos y el cine. Aquí comparto mis recomendaciones favoritas 🎮🎬</p>
+        <div class="profile-stats">
+          <div class="stat">
+            <span class="stat-number">42</span>
+            <span class="stat-label">Posts</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">1.2K</span>
+            <span class="stat-label">Seguidores</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">856</span>
+            <span class="stat-label">Siguiendo</span>
+          </div>
+        </div>
+      </div>
+      <button class="edit-profile-btn">✏️ Editar Perfil</button>
+    </div>
+  </div>
+
+  <div class="profile-tabs">
+    <button class="tab-btn active" data-tab="posts">📌 Posts</button>
+    <button class="tab-btn" data-tab="likes">❤️ Me gusta</button>
+    <button class="tab-btn" data-tab="saved">🔖 Guardados</button>
+  </div>
+
+  <div class="profile-content">
+    <div class="tab-content active" id="tab-posts">
+      <!-- Los posts se renderizarán aquí -->
+    </div>
+
+    <div class="tab-content" id="tab-likes">
+      <!-- Los posts que le gustaron se renderizarán aquí -->
+    </div>
+
+    <div class="tab-content" id="tab-saved">
+      <!-- Los posts guardados se renderizarán aquí -->
+    </div>
+  </div>
+</div>

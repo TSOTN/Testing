@@ -1,0 +1,130 @@
+<!-- Contenido de la sección Crear (sin etiquetas html/body/head) -->
+<div class="crear-section">
+  <div class="crear-container">
+    <div class="crear-header">
+      <h1>Crear nuevo post</h1>
+      <p>Comparte tu videojuego o película favorita</p>
+    </div>
+
+    <form id="create-post-form" class="create-form">
+      <!-- Sección de Juego -->
+      <div class="form-section">
+        <h2>🎮 Videojuego</h2>
+        
+        <div class="form-group">
+          <label for="game-title">Título del juego</label>
+          <input type="text" id="game-title" placeholder="Ej: Baldur's Gate 3" required />
+        </div>
+
+        <div class="form-group">
+          <label for="game-description">Descripción</label>
+          <textarea id="game-description" placeholder="¿Qué te gustó de este juego?" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="game-image">Imagen del juego</label>
+          <div class="image-upload">
+            <input type="text" id="game-image" placeholder="URL de la imagen o sube una" />
+            <label for="game-file" class="upload-btn">📁 Subir imagen</label>
+            <input type="file" id="game-file" accept="image/*" style="display: none;" />
+          </div>
+          <div id="game-preview" class="image-preview"></div>
+        </div>
+      </div>
+
+      <!-- Sección de Película -->
+      <div class="form-section">
+        <h2>🎬 Película recomendada</h2>
+        
+        <div class="form-group">
+          <label for="movie-title">Título de la película</label>
+          <input type="text" id="movie-title" placeholder="Ej: Oppenheimer" required />
+        </div>
+
+        <div class="form-group">
+          <label for="movie-description">Descripción</label>
+          <textarea id="movie-description" placeholder="¿Por qué recomiendas esta película?" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="movie-image">Imagen de la película</label>
+          <div class="image-upload">
+            <input type="text" id="movie-image" placeholder="URL de la imagen o sube una" />
+            <label for="movie-file" class="upload-btn">📁 Subir imagen</label>
+            <input type="file" id="movie-file" accept="image/*" style="display: none;" />
+          </div>
+          <div id="movie-preview" class="image-preview"></div>
+        </div>
+      </div>
+
+      <!-- Sección de Tags/Géneros -->
+      <div class="form-section">
+        <h2>🏷️ Tags</h2>
+        <div class="form-group">
+          <label for="tags">Agrega tags para clasificar (separados por comas)</label>
+          <input type="text" id="tags" placeholder="Ej: RPG, Ciencia Ficción, Aventura" />
+        </div>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="form-actions">
+        <button type="button" class="btn-preview" id="preview-btn">👁️ Vista previa</button>
+        <button type="submit" class="btn-publish">✨ Publicar post</button>
+      </div>
+    </form>
+
+    <!-- Modal de Vista Previa -->
+    <div id="preview-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <button class="close-modal" id="close-preview">&times;</button>
+        <h2>Vista Previa de tu Post</h2>
+        
+        <div class="preview-post-card">
+          <div class="preview-card-front">
+            <img id="preview-game-img" src="" alt="Game" />
+            <h3 id="preview-game-title"></h3>
+            <p id="preview-game-desc"></p>
+            <button class="flip-card-btn" onclick="document.querySelector('.preview-post-card').classList.toggle('flipped')">Ver película recomendada ➜</button>
+            <div class="post-actions">
+              <div class="post-action">
+                <span class="post-action-icon">🤍</span>
+                <span>0</span>
+              </div>
+              <div class="post-action">
+                <span class="post-action-icon">💬</span>
+                <span>0</span>
+              </div>
+              <div class="post-action">
+                <span class="post-action-icon">↗️</span>
+              </div>
+            </div>
+          </div>
+          <div class="preview-card-back">
+            <img id="preview-movie-img" src="" alt="Movie" />
+            <h3 id="preview-movie-title"></h3>
+            <p id="preview-movie-desc"></p>
+            <button class="flip-card-btn" onclick="document.querySelector('.preview-post-card').classList.toggle('flipped')">← Ver videojuego</button>
+            <div class="post-actions">
+              <div class="post-action">
+                <span class="post-action-icon">🤍</span>
+                <span>0</span>
+              </div>
+              <div class="post-action">
+                <span class="post-action-icon">💬</span>
+                <span>0</span>
+              </div>
+              <div class="post-action">
+                <span class="post-action-icon">↗️</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensajes de éxito -->
+    <div id="success-message" class="success-message" style="display: none;">
+      ✅ ¡Post publicado exitosamente!
+    </div>
+  </div>
+</div>
