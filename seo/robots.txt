@@ -1,0 +1,27 @@
+# Robots.txt para Pixel & Frames
+# Permite a todos los bots rastrear el sitio
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /private
+
+# Google Bot específico
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing Bot específico
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Dirección del Sitemap
+Sitemap: https://pixelandframes.com/seo/sitemap.xml
+Sitemap: https://pixelandframes.com/seo/sitemap-es.xml
+
+# Tiempo de espera entre solicitudes
+Request-rate: 1/1s
+
+# Comentario: Última actualización
+# Updated: 2025-12-03

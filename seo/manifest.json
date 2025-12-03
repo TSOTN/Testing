@@ -1,0 +1,79 @@
+{
+  "name": "Pixel & Frames - Red Social de Videojuegos y Cine",
+  "short_name": "Pixel & Frames",
+  "description": "Comunidad donde videojuegos y películas se conectan. Comparte recomendaciones con fans como tú.",
+  "scope": "/",
+  "start_url": "/?utm_source=pwa",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#080814",
+  "theme_color": "#00ffff",
+  "categories": ["social", "entertainment"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Ccircle cx='96' cy='96' r='95' fill='%23f5f5f5'/%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2300d9ff'/%3E%3Cstop offset='100%25' stop-color='%23ff006e'/%3E%3C/linearGradient%3E%3Ccircle cx='96' cy='96' r='72' fill='none' stroke='url(%23g)' stroke-width='3'/%3E%3Crect x='66' y='66' width='60' height='35' rx='3' fill='none' stroke='url(%23g)' stroke-width='2.5'/%3E%3Cpath d='M 71 120 Q 71 115 76 115 L 116 115 Q 121 115 121 120 L 121 125 Q 121 130 116 130 L 76 130 Q 71 130 71 125 Z' fill='none' stroke='url(%23g)' stroke-width='2'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Ccircle cx='256' cy='256' r='250' fill='%23f5f5f5'/%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2300d9ff'/%3E%3Cstop offset='100%25' stop-color='%23ff006e'/%3E%3C/linearGradient%3E%3Ccircle cx='256' cy='256' r='190' fill='none' stroke='url(%23g)' stroke-width='8'/%3E%3Crect x='176' y='176' width='160' height='92' rx='8' fill='none' stroke='url(%23g)' stroke-width='6'/%3E%3Cpath d='M 186 330 Q 186 310 206 310 L 306 310 Q 326 310 326 330 L 326 350 Q 326 370 306 370 L 206 370 Q 186 370 186 350 Z' fill='none' stroke='url(%23g)' stroke-width='5'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://pixelandframes.com/screenshot-1.jpg",
+      "sizes": "540x720",
+      "type": "image/jpeg",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "https://pixelandframes.com/screenshot-2.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Crear Post",
+      "short_name": "Crear",
+      "description": "Crea una nueva recomendación de videojuego o película",
+      "url": "/?section=crear",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%2300d9ff' width='192' height='192'/%3E%3Ctext x='96' y='96' font-size='100' fill='white' text-anchor='middle' dominant-baseline='middle'%3E%2B%3C/text%3E%3C/svg%3E",
+          "sizes": "192x192",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Explorar",
+      "short_name": "Explorar",
+      "description": "Descubre nuevos videojuegos y películas",
+      "url": "/?section=explorar",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%23ff006e' width='192' height='192'/%3E%3Ctext x='96' y='96' font-size='100' fill='white' text-anchor='middle' dominant-baseline='middle'%3E%E2%9C%A8%3C/text%3E%3C/svg%3E",
+          "sizes": "192x192",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "prefer_related_applications": false
+}
