@@ -520,3 +520,154 @@ body.light-mode .post-actions {
     width: 100%;
   }
 }
+
+@media (max-width: 600px) {
+  .crear-section {
+    padding: 10px;
+  }
+
+  .crear-container {
+    padding: 15px;
+    border-radius: 12px;
+  }
+
+  .crear-header {
+    margin-bottom: 25px;
+  }
+
+  .crear-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .crear-header p {
+    font-size: 0.85rem;
+  }
+
+  .form-section {
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+
+  .form-section h2 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+  }
+
+  .form-group input[type="text"],
+  .form-group textarea {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+
+  .form-group textarea {
+    min-height: 80px;
+  }
+
+  .image-upload {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .image-upload input[type="text"] {
+    width: 100%;
+  }
+
+  .upload-btn {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 0.8rem;
+  }
+
+  .image-preview {
+    height: 120px;
+    font-size: 2rem;
+    margin-top: 8px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .btn-preview,
+  .btn-publish {
+    padding: 12px 20px;
+    font-size: 0.8rem;
+  }
+
+  .modal {
+    padding: 10px;
+  }
+
+  .modal-content {
+    padding: 15px;
+    max-width: 100%;
+    border-radius: 12px;
+  }
+
+  .modal-content h2 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+
+  .close-modal {
+    width: 35px;
+    height: 35px;
+    font-size: 1.5rem;
+  }
+
+  .preview-post-card {
+    height: 350px;
+    margin-top: 15px;
+  }
+
+  .preview-card-front,
+  .preview-card-back {
+    padding: 10px;
+  }
+
+  .preview-card-front img,
+  .preview-card-back img {
+    height: 120px;
+    margin-bottom: 8px;
+  }
+
+  .preview-card-front h3,
+  .preview-card-back h3 {
+    font-size: 0.95rem;
+  }
+
+  .preview-card-front p,
+  .preview-card-back p {
+    font-size: 0.8rem;
+  }
+
+  .flip-card-btn {
+    padding: 8px;
+    font-size: 0.7rem;
+    margin-bottom: 8px;
+  }
+
+  .post-actions {
+    gap: 12px;
+    font-size: 0.75rem;
+  }
+
+  .success-message {
+    right: 15px;
+    bottom: 20px;
+    padding: 12px 18px;
+    font-size: 0.85rem;
+  }
+}
+

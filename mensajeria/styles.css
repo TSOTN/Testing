@@ -339,3 +339,82 @@ body.light-mode .send-btn:hover {
     max-width: 85%;
   }
 }
+
+@media (max-width: 600px) {
+  .messaging-container {
+    height: 100vh;
+  }
+
+  .conversations-list {
+    height: 100px;
+    padding: 10px 0 0 0;
+  }
+
+  .conversations-list h2 {
+    margin: 0 10px 8px 10px;
+    font-size: 1.1rem;
+  }
+
+  .search-conversations {
+    margin: 0 8px 8px 8px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    width: calc(100% - 16px);
+  }
+
+  .conversation-item {
+    padding: 10px 12px;
+  }
+
+  .conversation-avatar {
+    width: 35px;
+    height: 35px;
+  }
+
+  .conversation-name {
+    font-size: 0.85rem;
+  }
+
+  .conversation-preview {
+    font-size: 0.75rem;
+  }
+
+  .chat-area {
+    height: calc(100% - 100px);
+  }
+
+  .chat-header {
+    padding: 12px;
+  }
+
+  .chat-header h3 {
+    font-size: 1rem;
+  }
+
+  .messages-container {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .message-bubble {
+    max-width: 90%;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+
+  .message-input-area {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  #message-input {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+
+  .send-btn {
+    padding: 10px 15px;
+    font-size: 1rem;
+  }
+}
+

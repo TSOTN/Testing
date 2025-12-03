@@ -276,3 +276,60 @@ body.light-mode .notification-image {
     height: 45px;
   }
 }
+
+@media (max-width: 600px) {
+  .notifications-section {
+    padding: 10px;
+  }
+
+  .notifications-container {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .notifications-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .notifications-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .notification-filters {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    flex: 1;
+    min-width: 70px;
+    font-size: 0.75rem;
+    padding: 6px 10px;
+  }
+
+  .notifications-list {
+    gap: 8px;
+  }
+
+  .notification-item {
+    flex-direction: column;
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .notification-avatar {
+    width: 35px;
+    height: 35px;
+  }
+
+  .notification-content {
+    width: 100%;
+  }
+
+  .notification-action {
+    width: 100%;
+    font-size: 0.75rem;
+  }
+}
+

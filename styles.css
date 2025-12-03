@@ -380,4 +380,136 @@ body.light-mode {
     .nav-text { font-size: 0.7rem; margin-top: 4px; }
 
     .main-content { margin-left: 0; margin-bottom: 80px; }
+
+    .theme-toggle {
+      width: 45px;
+      height: 45px;
+      font-size: 1.2rem;
+      top: 15px;
+      right: 15px;
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    .subtitle {
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+    }
+
+    input[type="text"] {
+      font-size: 1rem;
+      padding: 12px 14px;
+    }
+
+    .results,
+    .feed-container {
+      grid-template-columns: 1fr;
+      max-width: 100%;
+      gap: 20px;
+    }
+
+    .card-container,
+    .post-card-container {
+      height: 400px;
+    }
+
+    .post-card-front img, .post-card-back img { height: 150px; }
   }
+
+  @media (max-width: 600px) {
+    .sidebar {
+      padding: 8px;
+      height: 70px;
+    }
+
+    .nav-list {
+      gap: 2px;
+    }
+
+    .nav-item {
+      padding: 6px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    .nav-icon {
+      font-size: 1rem;
+    }
+
+    .nav-text {
+      font-size: 0.6rem;
+      margin-top: 2px;
+    }
+
+    .main-content {
+      padding: 20px 10px 30px 10px;
+      margin-bottom: 70px;
+    }
+
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      font-size: 1rem;
+      top: 10px;
+      right: 10px;
+    }
+
+    h1 {
+      font-size: clamp(1.3rem, 2.5vw, 2rem);
+      margin-bottom: 3px;
+      margin-top: 15px;
+    }
+
+    .subtitle {
+      font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      font-size: 0.95rem;
+      padding: 10px 12px;
+    }
+
+    .controls {
+      max-width: 100%;
+    }
+
+    .flip-btn, .mode-btn {
+      padding: 10px 16px;
+      font-size: 0.85rem;
+    }
+
+    .results,
+    .feed-container {
+      grid-template-columns: 1fr;
+      max-width: 100%;
+      gap: 15px;
+    }
+
+    .card-container,
+    .post-card-container {
+      height: 350px;
+    }
+
+    .card-front img, .card-back img,
+    .post-card-front img, .post-card-back img {
+      height: 120px;
+    }
+
+    .card-front h3, .card-back h3,
+    .post-card-front h3, .post-card-back h3 {
+      font-size: 1rem;
+    }
+
+    .relation,
+    .post-card-front p, .post-card-back p {
+      font-size: 0.85rem;
+    }
+
+    footer {
+      padding-top: 30px;
+      font-size: 0.8rem;
+    }
+  }
+
