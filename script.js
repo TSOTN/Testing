@@ -15,7 +15,7 @@ if (savedTheme === 'light') {
 themeToggle.addEventListener('click', () => {
   body.classList.toggle('light-mode');
   const isLightMode = body.classList.contains('light-mode');
-  
+
   // Cambiar icono y guardar preferencia
   themeToggle.textContent = isLightMode ? '☀️' : '🌙';
   localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
@@ -198,13 +198,13 @@ function renderCards(items) {
       <div class="card" data-index="${index}">
         <div class="card-front">
           <img src="${item.juegoImg}" alt="${item.juego}" onerror="this.src='https://via.placeholder.com/300x200/111122/00ffff?text=${encodeURIComponent(item.juego)}'" />
-          <h3>🎮 ${item.juego}</h3>
+          <h2>🎮 ${item.juego}</h2>
           <p class="relation">${item.juegoDesc}</p>
           <button class="flip-card-btn" onclick="flipCard(${index})">Ver película recomendada ➜</button>
         </div>
         <div class="card-back">
           <img src="${item.peliculaImg}" alt="${item.pelicula}" onerror="this.src='https://via.placeholder.com/300x200/111122/ff00c8?text=${encodeURIComponent(item.pelicula)}'" />
-          <h3>🎬 ${item.pelicula}</h3>
+          <h2>🎬 ${item.pelicula}</h2>
           <p class="relation">${item.peliculaDesc}</p>
           <button class="flip-card-btn" onclick="flipCard(${index})">← Ver videojuego</button>
         </div>
@@ -264,7 +264,7 @@ function renderFeed(feedPosts = posts) {
       <div class="post-card" data-index="${index}">
         <div class="post-card-front">
           <img src="${post.frontImg}" alt="${post.frontTitle}" onerror="this.src='https://via.placeholder.com/300x200/111122/00ffff?text=${encodeURIComponent(post.frontTitle)}'" />
-          <h3>${post.frontTitle}</h3>
+          <h2>${post.frontTitle}</h2>
           <p>${post.frontDesc}</p>
           <button class="flip-card-btn" onclick="flipPostCard(${index})">Ver recomendación ➜</button>
           <div class="post-actions">
@@ -283,7 +283,7 @@ function renderFeed(feedPosts = posts) {
         </div>
         <div class="post-card-back">
           <img src="${post.backImg}" alt="${post.backTitle}" onerror="this.src='https://via.placeholder.com/300x200/111122/ff00c8?text=${encodeURIComponent(post.backTitle)}'" />
-          <h3>${post.backTitle}</h3>
+          <h2>${post.backTitle}</h2>
           <p>${post.backDesc}</p>
           <button class="flip-card-btn" onclick="flipPostCard(${index})">← Volver</button>
           <div class="post-actions">
@@ -415,7 +415,7 @@ const exploreData = [
 function renderExploreItems(items) {
   const grid = document.getElementById('explore-grid');
   if (!grid) return;
-  
+
   grid.innerHTML = '';
   items.forEach(item => {
     const card = document.createElement('article');

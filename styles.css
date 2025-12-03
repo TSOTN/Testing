@@ -304,7 +304,7 @@ body.light-mode {
   .card-front:hover, .card-back:hover { box-shadow: 0 0 20px rgba(255,0,200,0.18); }
   .card-back { transform: rotateY(180deg); }
   .card-front img, .card-back img { width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:12px; }
-  .card-front h3, .card-back h3 { font-size:1.2rem; margin:8px 0; color:var(--accent1); }
+  .card-front h2, .card-front h3, .card-back h2, .card-back h3 { font-size:1.2rem; margin:8px 0; color:var(--accent1); }
   .flip-card-btn { margin-top:auto; padding:10px; border-radius:8px; border:1px solid var(--accent2); background:rgba(255,0,200,0.08); color:var(--text); font-family:'Orbitron',sans-serif; font-size:0.85rem; cursor:pointer; transition:all 0.2s ease; }
   .flip-card-btn:hover { background: rgba(255,0,200,0.22); box-shadow:0 0 10px rgba(255,0,200,0.18); }
   .relation { color:var(--muted); font-size:0.9rem; margin-top:6px; }
@@ -337,7 +337,7 @@ body.light-mode {
 
   .post-card-front img, .post-card-back img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 12px; }
 
-  .post-card-front h3, .post-card-back h3 { font-size: 1.1rem; margin: 8px 0; color: var(--accent1); }
+  .post-card-front h2, .post-card-front h3, .post-card-back h2, .post-card-back h3 { font-size: 1.1rem; margin: 8px 0; color: var(--accent1); }
 
   .post-card-front p, .post-card-back p { font-size: 0.9rem; color: var(--muted); margin: 0 0 12px 0; line-height: 1.4; flex-grow: 1; }
 
@@ -498,7 +498,7 @@ body.light-mode {
     }
 
     .card-front h3, .card-back h3,
-    .post-card-front h3, .post-card-back h3 {
+    .post-card-front h2, .post-card-front h3, .post-card-back h2, .post-card-back h3 {
       font-size: 1rem;
     }
 
