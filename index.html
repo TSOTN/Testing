@@ -47,12 +47,28 @@
   <meta name="distribution" content="global" />
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
+  
+  <!-- Preconnect to external resources -->
+  <link rel="preconnect" href="https://cdn.akamai.steamstatic.com" crossorigin />
+  <link rel="preconnect" href="https://m.media-amazon.com" crossorigin />
+  <link rel="preconnect" href="https://img.youtube.com" crossorigin />
+  <link rel="preconnect" href="https://api.dicebear.com" crossorigin />
+  <link rel="dns-prefetch" href="https://cdn.akamai.steamstatic.com" />
+  <link rel="dns-prefetch" href="https://m.media-amazon.com" />
+  <link rel="dns-prefetch" href="https://img.youtube.com" />
+  <link rel="dns-prefetch" href="https://api.dicebear.com" />
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="styles.css">
+  
+  <!-- Preload critical resources for LCP -->
+  <link rel="preload" as="image" href="https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg" fetchpriority="high" />
 
   <!-- Favicon SVG -->
   <link rel="icon" type="image/svg+xml"
@@ -211,7 +227,7 @@
         películas.</span></footer>
   </main>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 
 </html>

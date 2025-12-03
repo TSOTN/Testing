@@ -1,25 +1,39 @@
-document.getElementById('year').textContent = new Date().getFullYear();
+// Ejecutar cuando el DOM esté listo
+(function init() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+    return;
+  }
+  
+  // Año en el footer
+  const yearEl = document.getElementById('year');
+  if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+  }
 
-// Theme Toggle Functionality
-const themeToggle = document.getElementById('theme-toggle');
-const htmlElement = document.documentElement;
-const body = document.body;
+  // Theme Toggle Functionality
+  const themeToggle = document.getElementById('theme-toggle');
+  const htmlElement = document.documentElement;
+  const body = document.body;
 
-// Cargar tema guardado
-const savedTheme = localStorage.getItem('theme') || 'dark';
-if (savedTheme === 'light') {
-  body.classList.add('light-mode');
-  themeToggle.textContent = '☀️';
-}
+  // Cargar tema guardado
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  if (savedTheme === 'light') {
+    body.classList.add('light-mode');
+    if (themeToggle) themeToggle.textContent = '☀️';
+  }
 
-themeToggle.addEventListener('click', () => {
-  body.classList.toggle('light-mode');
-  const isLightMode = body.classList.contains('light-mode');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('light-mode');
+      const isLightMode = body.classList.contains('light-mode');
 
-  // Cambiar icono y guardar preferencia
-  themeToggle.textContent = isLightMode ? '☀️' : '🌙';
-  localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
-});
+      // Cambiar icono y guardar preferencia
+      themeToggle.textContent = isLightMode ? '☀️' : '🌙';
+      localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
+    });
+  }
+})();
 
 const data = [
   {
@@ -254,16 +268,17 @@ function renderCards(items) {
   items.forEach((item, index) => {
     const card = document.createElement('div');
     card.className = 'card-container';
+    const loadingAttr = index < 2 ? 'eager' : 'lazy';
     card.innerHTML = `
       <div class="card" data-index="${index}">
         <div class="card-front">
-          <img src="${item.juegoImg}" alt="${item.juego}" onerror="this.src='https://via.placeholder.com/300x200/111122/00ffff?text=${encodeURIComponent(item.juego)}'" />
+          <img src="${item.juegoImg}" alt="${item.juego}" loading="${loadingAttr}" width="300" height="200" decoding="async" onerror="this.src='https://via.placeholder.com/300x200/111122/00ffff?text=${encodeURIComponent(item.juego)}'" />
           <h2>🎮 ${item.juego}</h2>
           <p class="relation">${item.juegoDesc}</p>
           <button class="flip-card-btn" onclick="flipCard(${index})">Ver película recomendada ➜</button>
         </div>
         <div class="card-back">
-          <img src="${item.peliculaImg}" alt="${item.pelicula}" onerror="this.src='https://via.placeholder.com/300x200/111122/ff00c8?text=${encodeURIComponent(item.pelicula)}'" />
+          <img src="${item.peliculaImg}" alt="${item.pelicula}" loading="lazy" width="300" height="200" decoding="async" onerror="this.src='https://via.placeholder.com/300x200/111122/ff00c8?text=${encodeURIComponent(item.pelicula)}'" />
           <h2>🎬 ${item.pelicula}</h2>
           <p class="relation">${item.peliculaDesc}</p>
           <button class="flip-card-btn" onclick="flipCard(${index})">← Ver videojuego</button>
@@ -320,10 +335,14 @@ function renderFeed(feedPosts = posts) {
   feedPosts.forEach((post, index) => {
     const cardContainer = document.createElement('div');
     cardContainer.className = 'post-card-container';
+    // Lazy load images except the first one (LCP optimization)
+    const loadingAttr = index === 0 ? 'eager' : 'lazy';
+    const fetchPriority = index === 0 ? 'high' : 'auto';
+    
     cardContainer.innerHTML = `
       <div class="post-card" data-index="${index}">
         <div class="post-card-front">
-          <img src="${post.frontImg}" alt="${post.frontTitle}" onerror="this.src='https://via.placeholder.com/300x200/111122/00ffff?text=${encodeURIComponent(post.frontTitle)}'" />
+          <img src="${post.frontImg}" alt="${post.frontTitle}" loading="${loadingAttr}" fetchpriority="${fetchPriority}" width="280" height="200" decoding="async" onerror="this.src='https://via.placeholder.com/300x200/111122/00ffff?text=${encodeURIComponent(post.frontTitle)}'" />
           <h2>${post.frontTitle}</h2>
           <p>${post.frontDesc}</p>
           <button class="flip-card-btn" onclick="flipPostCard(${index})">Ver recomendación ➜</button>
@@ -342,7 +361,7 @@ function renderFeed(feedPosts = posts) {
           </div>
         </div>
         <div class="post-card-back">
-          <img src="${post.backImg}" alt="${post.backTitle}" onerror="this.src='https://via.placeholder.com/300x200/111122/ff00c8?text=${encodeURIComponent(post.backTitle)}'" />
+          <img src="${post.backImg}" alt="${post.backTitle}" loading="lazy" width="280" height="200" decoding="async" onerror="this.src='https://via.placeholder.com/300x200/111122/ff00c8?text=${encodeURIComponent(post.backTitle)}'" />
           <h2>${post.backTitle}</h2>
           <p>${post.backDesc}</p>
           <button class="flip-card-btn" onclick="flipPostCard(${index})">← Volver</button>
@@ -380,9 +399,12 @@ function toggleLike(index) {
 
 
 // Sidebar Navigation Functionality
-const navItems = document.querySelectorAll('.nav-item');
+function initNavigation() {
+  const navItems = document.querySelectorAll('.nav-item');
+  
+  if (navItems.length === 0) return; // Si no hay elementos, salir
 
-function handleNavClick(e) {
+  function handleNavClick(e) {
   const title = this.getAttribute('title');
 
   // Remove active state from all items
@@ -437,23 +459,33 @@ function handleNavClick(e) {
   }
 }
 
-navItems.forEach(item => {
-  item.addEventListener('click', handleNavClick);
-  item.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      handleNavClick.call(this, e);
-    }
+  navItems.forEach(item => {
+    item.addEventListener('click', handleNavClick);
+    item.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleNavClick.call(this, e);
+      }
+    });
   });
-});
 
-// Set first nav item as active by default
-if (navItems.length) {
-  navItems[0].classList.add('active');
-  navItems[0].setAttribute('aria-pressed', 'true');
+  // Set first nav item as active by default
+  if (navItems.length) {
+    navItems[0].classList.add('active');
+    navItems[0].setAttribute('aria-pressed', 'true');
+  }
 }
 
-renderFeed();
+// Render feed inicial e inicializar navegación cuando el DOM esté listo
+(function initApp() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+    return;
+  }
+  
+  renderFeed();
+  initNavigation();
+})();
 
 // --- Integración SPA para sección Explorar (sin salir de la página) ---
 
@@ -482,7 +514,7 @@ function renderExploreItems(items) {
     card.className = 'explore-card';
     const icon = item.type === 'juego' ? '🎮' : '🎬';
     card.innerHTML = `
-      <img src="${item.img}" alt="${item.title}" onerror="this.src='https://via.placeholder.com/400x180/111122/00ffff?text=${encodeURIComponent(item.title)}'"/>
+      <img src="${item.img}" alt="${item.title}" loading="lazy" width="400" height="180" decoding="async" onerror="this.src='https://via.placeholder.com/400x180/111122/00ffff?text=${encodeURIComponent(item.title)}'"/>
       <h3>${icon} ${item.title}</h3>
       <p>${item.desc}</p>
     `;
