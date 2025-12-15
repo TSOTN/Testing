@@ -259,6 +259,31 @@ function initNavigation() {
   }
 }
 
+// Configuración del backend - intenta detectar automáticamente el puerto
+const API_BASE_URL = 'http://localhost:3001'; // Puerto para Docker (mapeado en docker-compose)
+
+// Función auxiliar para hacer fetch con reintentos en diferentes puertos
+async function fetchWithFallback(endpoint) {
+  const ports = [3001, 3000]; // Primero intenta Docker (3001), luego directo (3000)
+  
+  for (const port of ports) {
+    try {
+      console.log(`🔄 Intentando conectar al backend en puerto ${port}...`);
+      const response = await fetch(`http://localhost:${port}${endpoint}`);
+      if (response.ok) {
+        console.log(`✅ ¡Conexión exitosa! Backend respondiendo en puerto ${port}`);
+        return await response.json();
+      } else {
+        console.warn(`⚠️ Puerto ${port} respondió con status ${response.status}`);
+      }
+    } catch (error) {
+      console.log(`❌ Puerto ${port} no disponible: ${error.message}`);
+      continue;
+    }
+  }
+  throw new Error('No se pudo conectar al backend en ningún puerto');
+}
+
 // Render feed inicial e inicializar navegación cuando el DOM esté listo
 async function initApp() {
   if (document.readyState === 'loading') {
@@ -267,14 +292,56 @@ async function initApp() {
   }
 
   try {
-    const postsRes = await fetch('http://localhost:3001/api/posts');
-    posts = await postsRes.json();
+    console.log('🚀 Iniciando conexión con el backend...');
+    posts = await fetchWithFallback('/api/posts');
+    console.log(`📦 Posts cargados: ${posts.length} posts recibidos del backend`);
     renderFeed();
 
-    const dataRes = await fetch('http://localhost:3001/api/recommendations');
-    data = await dataRes.json();
+    data = await fetchWithFallback('/api/recommendations');
+    console.log(`📦 Recomendaciones cargadas: ${data.length} recomendaciones recibidas del backend`);
+    console.log('✅ ¡Frontend conectado correctamente al backend!');
   } catch (error) {
-    console.error('Error loading data:', error);
+    console.error('❌ ERROR: No se pudo conectar al backend:', error.message);
+    console.log('📋 Cargando datos de prueba (mock data) como respaldo...');
+
+    posts = [
+      {
+        frontImg: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg',
+        frontTitle: 'Cyberpunk 2077',
+        frontDesc: 'RPG de mundo abierto en un futuro distópico.',
+        backImg: 'https://m.media-amazon.com/images/M/MV5BMDk4MTNhNGMtZTE2Ni00MTIxLTk2NzUtYjI1ZWM5NmRkODM5XkEyXkFqcGdeQXVyODc0OTEyNDU@._V1_.jpg',
+        backTitle: 'Blade Runner 2049',
+        backDesc: 'Un nuevo blade runner descubre un secreto mucho tiempo enterrado.',
+        liked: false,
+        likes: 124,
+        comments: 45
+      },
+      {
+        frontImg: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg',
+        frontTitle: 'Red Dead Redemption 2',
+        frontDesc: 'Épica historia de forajidos en el corazón de América.',
+        backImg: 'https://m.media-amazon.com/images/M/MV5BMjA5ZjA3ZjMtMzA2ZC00ZGY5LTg3ZTEtMDQ0MjEzNWYxMjFjXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg',
+        backTitle: 'The Hateful Eight',
+        backDesc: 'Ocho extraños atrapados en una cabaña durante una tormenta.',
+        liked: true,
+        likes: 892,
+        comments: 120
+      },
+      {
+        frontImg: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/374320/header.jpg',
+        frontTitle: 'Dark Souls III',
+        frontDesc: 'Desafía a la oscuridad en este RPG de acción aclamado.',
+        backImg: 'https://m.media-amazon.com/images/M/MV5BNDQ2ZGRhYjYtYjBmYy00ZjBiLTg3ZDktOTRlYzIwMWNhMjgwXkEyXkFqcGdeQXVyNjE5MjUyOTM@._V1_.jpg',
+        backTitle: 'Berserk (1997)',
+        backDesc: 'La historia de Guts y su búsqueda de venganza en un mundo oscuro.',
+        liked: false,
+        likes: 567,
+        comments: 89
+      }
+    ];
+
+    // Renderizamos con los datos de prueba
+    renderFeed();
   }
 
   initNavigation();
