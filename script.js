@@ -260,11 +260,11 @@ function initNavigation() {
 }
 
 // Configuración del backend - detecta automáticamente si está en producción o desarrollo
-// Si estás en Railway/producción, reemplaza esta URL con la de tu backend desplegado
-// Ejemplo: const API_BASE_URL = 'https://tu-backend.up.railway.app';
+// Si estás en Render/producción, reemplaza esta URL con la de tu backend desplegado
+// Ejemplo: const API_BASE_URL = 'https://tu-backend.onrender.com';
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
   ? null // null = modo desarrollo, intentará puertos locales
-  : 'https://TU-BACKEND-URL.up.railway.app'; // ⚠️ CAMBIAR ESTO con tu URL de Railway
+  : 'https://TU-BACKEND-URL.onrender.com'; // ⚠️ CAMBIAR ESTO con tu URL de Render
 
 // Función auxiliar para hacer fetch con reintentos en diferentes puertos (solo desarrollo)
 async function fetchWithFallback(endpoint) {
