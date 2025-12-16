@@ -260,11 +260,9 @@ function initNavigation() {
 }
 
 // Configuración del backend - detecta automáticamente si está en producción o desarrollo
-// Si estás en Render/producción, reemplaza esta URL con la de tu backend desplegado
-// Ejemplo: const API_BASE_URL = 'https://tu-backend.onrender.com';
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
   ? null // null = modo desarrollo, intentará puertos locales
-  : 'https://TU-BACKEND-URL.onrender.com'; // ⚠️ CAMBIAR ESTO con tu URL de Render
+  : 'https://testing-ivmx.onrender.com'; // ✅ URL de producción en Render
 
 // Función auxiliar para hacer fetch con reintentos en diferentes puertos (solo desarrollo)
 async function fetchWithFallback(endpoint) {
