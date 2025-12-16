@@ -202,7 +202,8 @@ app.get('/api/posts', (req, res) => {
   res.json(posts);
 });
 
-const PORT = 3000;
+// Railway asigna el puerto automáticamente, si no existe usa 3000 para desarrollo local
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Backend corriendo en puerto ${PORT}`);
 });

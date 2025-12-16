@@ -259,11 +259,31 @@ function initNavigation() {
   }
 }
 
-// Configuración del backend - intenta detectar automáticamente el puerto
-const API_BASE_URL = 'http://localhost:3001'; // Puerto para Docker (mapeado en docker-compose)
+// Configuración del backend - detecta automáticamente si está en producción o desarrollo
+// Si estás en Railway/producción, reemplaza esta URL con la de tu backend desplegado
+// Ejemplo: const API_BASE_URL = 'https://tu-backend.up.railway.app';
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+  ? null // null = modo desarrollo, intentará puertos locales
+  : 'https://TU-BACKEND-URL.up.railway.app'; // ⚠️ CAMBIAR ESTO con tu URL de Railway
 
-// Función auxiliar para hacer fetch con reintentos en diferentes puertos
+// Función auxiliar para hacer fetch con reintentos en diferentes puertos (solo desarrollo)
 async function fetchWithFallback(endpoint) {
+  // Si hay una URL de producción configurada, úsala directamente
+  if (API_BASE_URL) {
+    try {
+      console.log(`🌐 Conectando a backend en producción: ${API_BASE_URL}`);
+      const response = await fetch(`${API_BASE_URL}${endpoint}`);
+      if (response.ok) {
+        console.log(`✅ ¡Conexión exitosa con backend en producción!`);
+        return await response.json();
+      }
+    } catch (error) {
+      console.error(`❌ Error conectando a producción: ${error.message}`);
+      throw error;
+    }
+  }
+  
+  // Modo desarrollo: intenta puertos locales
   const ports = [3001, 3000]; // Primero intenta Docker (3001), luego directo (3000)
   
   for (const port of ports) {
