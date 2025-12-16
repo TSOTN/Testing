@@ -186,11 +186,24 @@ app.use(express.json());
 
 app.get('/api/test', async (req, res) => {
   try {
+    // Log de las variables (sin mostrar la contraseña completa)
+    console.log('🔍 Variables de conexión:');
+    console.log('DB_HOST:', process.env.DB_HOST);
+    console.log('DB_PORT:', process.env.DB_PORT);
+    console.log('DB_USER:', process.env.DB_USER);
+    console.log('DB_NAME:', process.env.DB_NAME);
+    console.log('DB_PASSWORD:', process.env.DB_PASSWORD ? '***configurada***' : '❌ NO CONFIGURADA');
+    
     const result = await pool.query('SELECT NOW()');
     res.json(result.rows[0]);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error conectando a la DB' });
+    console.error('❌ Error de conexión:', error.message);
+    console.error('Detalles completos:', error);
+    res.status(500).json({ 
+      error: 'Error conectando a la DB',
+      message: error.message,
+      hint: 'Revisa los logs en Render para más detalles'
+    });
   }
 });
 
