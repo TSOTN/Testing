@@ -42,8 +42,8 @@ function initAuth() {
     // Login Submit
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value; // No trim password!
 
         try {
             showLoading(true);
@@ -53,6 +53,8 @@ function initAuth() {
                 body: JSON.stringify({ email, password })
             });
             const data = await res.json();
+
+            // ... (rest remains same)
 
             if (!res.ok) throw new Error(data.error || 'Error al iniciar sesión');
 
@@ -68,8 +70,8 @@ function initAuth() {
     // Register Submit
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const username = document.getElementById('register-username').value;
-        const email = document.getElementById('register-email').value;
+        const username = document.getElementById('register-username').value.trim();
+        const email = document.getElementById('register-email').value.trim();
         const password = document.getElementById('register-password').value;
 
         try {
@@ -79,6 +81,7 @@ function initAuth() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, email, password })
             });
+            // ...
             const data = await res.json();
 
             if (!res.ok) throw new Error(data.error || 'Error al registrarse');
