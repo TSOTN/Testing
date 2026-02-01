@@ -1,0 +1,37 @@
+/* CSS for App Container (Wrapper for Sidebar and Main) */
+#app-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Ensure Logo Animation still works with new structure */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Responsive adjustment for app container */
+@media (max-width: 768px) {
+    #app-container {
+        flex-direction: column-reverse;
+        /* Sidebar at bottom */
+    }
+}
+
+/* Landing Container mostly uses Auth styles, but we ensure it covers screen if needed */
+#landing-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

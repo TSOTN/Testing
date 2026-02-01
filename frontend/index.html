@@ -69,6 +69,7 @@
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="app-layout.css">
 
   <!-- Preload critical resources for LCP -->
   <link rel="preload" as="image" href="https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg"
@@ -137,101 +138,112 @@
   <button class="theme-toggle" id="theme-toggle" title="Cambiar tema entre oscuro y claro"
     aria-label="Cambiar tema">🌙</button>
 
-  <aside class="sidebar" role="navigation" aria-label="Navegación principal">
-    <div class="logo-container">
-      <svg width="100" height="100" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img"
-        aria-label="Logo de Pixel & Frames">
-        <defs>
-          <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#ff00c8;stop-opacity:1" />
-          </linearGradient>
-          <filter id="logoGlow">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-            <feMerge>
-              <feMergeNode in="coloredBlur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
+  <div id="landing-container"></div>
 
-        <g filter="url(#logoGlow)">
-          <circle cx="100" cy="100" r="60" fill="none" stroke="url(#logoGrad)" stroke-width="3" />
-          <circle cx="100" cy="100" r="55" fill="none" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.5" />
+  <div id="app-container" style="display: none;">
+    <aside class="sidebar" role="navigation" aria-label="Navegación principal">
+      <div class="logo-container">
+        <svg width="100" height="100" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img"
+          aria-label="Logo de Pixel & Frames">
+          <defs>
+            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ff00c8;stop-opacity:1" />
+            </linearGradient>
+            <filter id="logoGlow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
 
-          <line x1="100" y1="20" x2="100" y2="30" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round" />
-          <line x1="142" y1="34" x2="135" y2="41" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="166" y1="58" x2="159" y2="65" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="180" y1="100" x2="170" y2="100" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round" />
-          <line x1="166" y1="142" x2="159" y2="135" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="142" y1="166" x2="135" y2="159" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="100" y1="180" x2="100" y2="170" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round" />
-          <line x1="58" y1="166" x2="65" y2="159" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="34" y1="142" x2="41" y2="135" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="20" y1="100" x2="30" y2="100" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round" />
-          <line x1="34" y1="58" x2="41" y2="65" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="58" y1="34" x2="65" y2="41" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" />
+          <g filter="url(#logoGlow)">
+            <circle cx="100" cy="100" r="60" fill="none" stroke="url(#logoGrad)" stroke-width="3" />
+            <circle cx="100" cy="100" r="55" fill="none" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.5" />
 
-          <rect x="70" y="70" width="60" height="35" rx="3" fill="none" stroke="url(#logoGrad)" stroke-width="2.5" />
+            <line x1="100" y1="20" x2="100" y2="30" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round" />
+            <line x1="142" y1="34" x2="135" y2="41" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="166" y1="58" x2="159" y2="65" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="180" y1="100" x2="170" y2="100" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round" />
+            <line x1="166" y1="142" x2="159" y2="135" stroke="url(#logoGrad)" stroke-width="2.5"
+              stroke-linecap="round" />
+            <line x1="142" y1="166" x2="135" y2="159" stroke="url(#logoGrad)" stroke-width="2.5"
+              stroke-linecap="round" />
+            <line x1="100" y1="180" x2="100" y2="170" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round" />
+            <line x1="58" y1="166" x2="65" y2="159" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="34" y1="142" x2="41" y2="135" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="20" y1="100" x2="30" y2="100" stroke="url(#logoGrad)" stroke-width="3" stroke-linecap="round" />
+            <line x1="34" y1="58" x2="41" y2="65" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" />
+            <line x1="58" y1="34" x2="65" y2="41" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" />
 
-          <path
-            d="M 75 120 Q 75 115 80 115 L 120 115 Q 125 115 125 120 L 125 125 Q 125 132 120 132 L 80 132 Q 75 132 75 125 Z"
-            fill="none" stroke="url(#logoGrad)" stroke-width="2.5" />
+            <rect x="70" y="70" width="60" height="35" rx="3" fill="none" stroke="url(#logoGrad)" stroke-width="2.5" />
 
-          <line x1="85" y1="123" x2="90" y2="123" stroke="url(#logoGrad)" stroke-width="2" />
-          <line x1="87.5" y1="120.5" x2="87.5" y2="125.5" stroke="url(#logoGrad)" stroke-width="2" />
+            <path
+              d="M 75 120 Q 75 115 80 115 L 120 115 Q 125 115 125 120 L 125 125 Q 125 132 120 132 L 80 132 Q 75 132 75 125 Z"
+              fill="none" stroke="url(#logoGrad)" stroke-width="2.5" />
 
-          <circle cx="110" cy="120" r="2.5" fill="url(#logoGrad)" />
-          <circle cx="116" cy="123" r="2.5" fill="url(#logoGrad)" />
-          <circle cx="110" cy="126" r="2.5" fill="url(#logoGrad)" />
-          <circle cx="104" cy="123" r="2.5" fill="url(#logoGrad)" />
-        </g>
-      </svg>
-    </div>
+            <line x1="85" y1="123" x2="90" y2="123" stroke="url(#logoGrad)" stroke-width="2" />
+            <line x1="87.5" y1="120.5" x2="87.5" y2="125.5" stroke="url(#logoGrad)" stroke-width="2" />
 
-    <div class="search-box-sidebar">
-      <input type="text" id="search-sidebar" placeholder="Busca..." oninput="filterContentSidebar()"
-        aria-label="Buscador de posts" />
-    </div>
+            <circle cx="110" cy="120" r="2.5" fill="url(#logoGrad)" />
+            <circle cx="116" cy="123" r="2.5" fill="url(#logoGrad)" />
+            <circle cx="110" cy="126" r="2.5" fill="url(#logoGrad)" />
+            <circle cx="104" cy="123" r="2.5" fill="url(#logoGrad)" />
+          </g>
+        </svg>
+      </div>
 
-    <ul class="nav-list">
-      <li class="nav-item" title="Inicio" role="button" tabindex="0" aria-pressed="false" aria-label="Ir a inicio"><span
-          class="nav-icon">🏠</span><span class="nav-text">Inicio</span></li>
-      <li class="nav-item" title="Búsqueda" role="button" tabindex="0" aria-pressed="false" aria-label="Abrir búsqueda">
-        <span class="nav-icon">🔎</span><span class="nav-text">Búsqueda</span>
-      </li>
-      <li class="nav-item" title="Explorar" role="button" tabindex="0" aria-pressed="false"
-        aria-label="Explorar contenido"><span class="nav-icon">✨</span><span class="nav-text">Explorar</span></li>
-      <li class="nav-item" title="Mensajería" role="button" tabindex="0" aria-pressed="false"
-        aria-label="Ver mensajes directos"><span class="nav-icon">💬</span><span class="nav-text">Mensajería</span></li>
-      <li class="nav-item" title="Notificaciones" role="button" tabindex="0" aria-pressed="false"
-        aria-label="Ver notificaciones"><span class="nav-icon">🔔</span><span class="nav-text">Notificaciones</span>
-      </li>
-      <li class="nav-item" title="Crear" role="button" tabindex="0" aria-pressed="false" aria-label="Crear nuevo post">
-        <span class="nav-icon">➕</span><span class="nav-text">Crear</span>
-      </li>
-      <li class="nav-item" title="Perfil" role="button" tabindex="0" aria-pressed="false" aria-label="Ver perfil"><span
-          class="nav-icon">👤</span><span class="nav-text">Perfil</span></li>
-      <li class="nav-item" title="Más" role="button" tabindex="0" aria-pressed="false" aria-label="Más opciones"><span
-          class="nav-icon">⋯</span><span class="nav-text">Más</span></li>
-    </ul>
-  </aside>
+      <div class="search-box-sidebar">
+        <input type="text" id="search-sidebar" placeholder="Busca..." oninput="filterContentSidebar()"
+          aria-label="Buscador de posts" />
+      </div>
 
-  <main class="main-content">
-    <h1>PIXEL & FRAMES</h1>
-    <p class="subtitle">Una comunidad hecha por fans, para fans.</p>
+      <ul class="nav-list">
+        <li class="nav-item" title="Inicio" role="button" tabindex="0" aria-pressed="false" aria-label="Ir a inicio">
+          <span class="nav-icon">🏠</span><span class="nav-text">Inicio</span>
+        </li>
+        <li class="nav-item" title="Búsqueda" role="button" tabindex="0" aria-pressed="false"
+          aria-label="Abrir búsqueda">
+          <span class="nav-icon">🔎</span><span class="nav-text">Búsqueda</span>
+        </li>
+        <li class="nav-item" title="Explorar" role="button" tabindex="0" aria-pressed="false"
+          aria-label="Explorar contenido"><span class="nav-icon">✨</span><span class="nav-text">Explorar</span></li>
+        <li class="nav-item" title="Mensajería" role="button" tabindex="0" aria-pressed="false"
+          aria-label="Ver mensajes directos"><span class="nav-icon">💬</span><span class="nav-text">Mensajería</span>
+        </li>
+        <li class="nav-item" title="Notificaciones" role="button" tabindex="0" aria-pressed="false"
+          aria-label="Ver notificaciones"><span class="nav-icon">🔔</span><span class="nav-text">Notificaciones</span>
+        </li>
+        <li class="nav-item" title="Crear" role="button" tabindex="0" aria-pressed="false"
+          aria-label="Crear nuevo post">
+          <span class="nav-icon">➕</span><span class="nav-text">Crear</span>
+        </li>
+        <li class="nav-item" title="Perfil" role="button" tabindex="0" aria-pressed="false" aria-label="Ver perfil">
+          <span class="nav-icon">👤</span><span class="nav-text">Perfil</span>
+        </li>
+        <li class="nav-item" title="Más" role="button" tabindex="0" aria-pressed="false" aria-label="Más opciones"><span
+            class="nav-icon">⋯</span><span class="nav-text">Más</span></li>
+      </ul>
+    </aside>
 
-    <h2
-      style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">
-      Feed de contenido</h2>
-    <section class="feed-container" id="feed" role="region" aria-label="Feed de recomendaciones">
-      <!-- Los posts se renderizarán aquí -->
-    </section>
+    <main class="main-content">
+      <h1>PIXEL & FRAMES</h1>
+      <p class="subtitle">Una comunidad hecha por fans, para fans.</p>
 
-    <footer role="contentinfo">© <span id="year"></span> <strong>Pixel & Frames</strong> — Donde los videojuegos se
-      encuentran con el cine. <span class="footer-meta">Red social de recomendaciones para fans de gaming y
-        películas.</span></footer>
-  </main>
+      <h2
+        style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">
+        Feed de contenido</h2>
+      <section class="feed-container" id="feed" role="region" aria-label="Feed de recomendaciones">
+        <!-- Los posts se renderizarán aquí -->
+      </section>
+
+      <footer role="contentinfo">© <span id="year"></span> <strong>Pixel & Frames</strong> — Donde los videojuegos se
+        encuentran con el cine. <span class="footer-meta">Red social de recomendaciones para fans de gaming y
+          películas.</span></footer>
+    </main>
+  </div>
 
   <script src="script.js" defer></script>
 </body>

@@ -333,12 +333,27 @@ async function initApp() {
     console.log(`📦 Recomendaciones cargadas: ${data.length} recomendaciones recibidas del backend`);
     console.log('✅ ¡Frontend conectado correctamente al backend!');
 
-    // Check auth status
+    console.log('✅ ¡Frontend conectado correctamente al backend!');
+
+    // Check auth status for Gatekeeper
     const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (token && user.username) {
-      console.log(`👤 Usuario logueado: ${user.username}`);
-      // Actualizar UI para usuario logueado (opcional: cambiar icono de perfil)
+
+    if (!token) {
+      // No logged in -> Show Landing (Auth)
+      console.log('🔒 Usuario no logueado. Mostrando Landing Page.');
+      document.getElementById('app-container').style.display = 'none';
+      document.getElementById('landing-container').style.display = 'flex';
+      loadAuthIntoLanding();
+    } else {
+      // Logged in -> Show App
+      console.log('🔓 Usuario logueado. Entrando a la App.');
+      document.getElementById('app-container').style.display = 'flex';
+      document.getElementById('landing-container').style.display = 'none';
+
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      if (user.username) {
+        console.log(`👤 Bienvenido de nuevo: ${user.username}`);
+      }
     }
 
   } catch (error) {
