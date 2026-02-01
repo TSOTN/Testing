@@ -145,7 +145,7 @@ function showPreview() {
 
   // Mostrar modal
   document.getElementById('preview-modal').style.display = 'flex';
-  
+
   // Resetear flip
   document.querySelector('.preview-post-card').classList.remove('flipped');
 }
@@ -168,10 +168,13 @@ function publishPost() {
   }
 
   // Crear objeto del nuevo post
+  const storedUser = localStorage.getItem('user');
+  const user = storedUser ? JSON.parse(storedUser) : { username: 'Anónimo', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Anon' };
+
   const newPost = {
     id: Date.now(),
-    author: '@alexgaming', // Usar el usuario actual
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex',
+    author: '@' + user.username,
+    avatar: user.avatar_url || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + user.username,
     timestamp: 'Ahora',
     frontTitle: `🎮 ${gameTitle}`,
     frontDesc: gameDesc,

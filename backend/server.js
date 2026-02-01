@@ -184,6 +184,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Rutas de Autenticación
+// Rutas de Autenticación
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/posts', require('./routes/posts'));
+
 app.get('/api/test', async (req, res) => {
   try {
     // Log de las variables (sin mostrar la contraseña completa)
@@ -193,13 +198,13 @@ app.get('/api/test', async (req, res) => {
     console.log('DB_USER:', process.env.DB_USER);
     console.log('DB_NAME:', process.env.DB_NAME);
     console.log('DB_PASSWORD:', process.env.DB_PASSWORD ? '***configurada***' : '❌ NO CONFIGURADA');
-    
+
     const result = await pool.query('SELECT NOW()');
     res.json(result.rows[0]);
   } catch (error) {
     console.error('❌ Error de conexión:', error.message);
     console.error('Detalles completos:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       error: 'Error conectando a la DB',
       message: error.message,
       hint: 'Revisa los logs en Render para más detalles'

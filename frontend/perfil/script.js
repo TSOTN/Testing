@@ -1,5 +1,7 @@
 // Variables de usuario
-const currentUser = {
+// Intentar cargar usuario desde localStorage
+const storedUser = localStorage.getItem('user');
+const currentUser = storedUser ? JSON.parse(storedUser) : {
   name: 'Alex Gaming',
   handle: '@alexgaming',
   bio: '🎮 Videojuegos | 🎬 Cine | 📚 Crítica',
@@ -9,6 +11,12 @@ const currentUser = {
   following: 856,
   saved: []
 };
+// Si es usuario real (tiene id), asegurar que mostramos sus datos correctos
+if (storedUser) {
+  currentUser.name = currentUser.username; // El objeto de DB usa 'username'
+  currentUser.handle = '@' + currentUser.username;
+  currentUser.avatar = currentUser.avatar_url || currentUser.avatar;
+}
 
 // Datos de posts del usuario
 const userPosts = [
@@ -110,16 +118,16 @@ function setupTabListeners() {
       tabButtons.forEach(b => b.classList.remove('active'));
       // Agregar clase active al tab clickeado
       btn.classList.add('active');
-      
+
       // Remover clase active de todo el contenido
       document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.remove('active');
       });
-      
+
       // Agregar clase active al contenido correspondiente
       const tabName = btn.getAttribute('data-tab');
       document.getElementById(`tab-${tabName}`).classList.add('active');
-      
+
       // Renderizar contenido apropiado
       if (tabName === 'posts') {
         renderProfilePosts('all');
@@ -130,7 +138,7 @@ function setupTabListeners() {
       }
     });
   });
-  
+
   // Activar primer tab por defecto
   if (tabButtons.length > 0) {
     tabButtons[0].click();
@@ -139,18 +147,18 @@ function setupTabListeners() {
 
 function renderProfileHeader() {
   const profileSection = document.querySelector('.profile-section');
-  
+
   // Actualizar información del perfil
   const nameEl = profileSection.querySelector('.profile-name');
   const handleEl = profileSection.querySelector('.profile-handle');
   const bioEl = profileSection.querySelector('.profile-bio');
   const avatarEl = profileSection.querySelector('.profile-avatar');
-  
+
   if (nameEl) nameEl.textContent = currentUser.name;
   if (handleEl) handleEl.textContent = currentUser.handle;
   if (bioEl) bioEl.textContent = currentUser.bio;
   if (avatarEl) avatarEl.src = currentUser.avatar;
-  
+
   // Actualizar stats
   const stats = profileSection.querySelectorAll('.stat-number');
   if (stats[0]) stats[0].textContent = currentUser.posts;
@@ -161,15 +169,15 @@ function renderProfileHeader() {
 function renderProfilePosts(filter) {
   const tabContent = document.getElementById(`tab-${filter === 'all' ? 'posts' : filter}`);
   if (!tabContent) return;
-  
+
   let postsToShow = userPosts;
-  
+
   if (filter === 'likes') {
     postsToShow = userPosts.filter(post => post.liked);
   } else if (filter === 'saved') {
     postsToShow = userPosts.filter(post => post.saved);
   }
-  
+
   if (postsToShow.length === 0) {
     tabContent.innerHTML = `
       <div class="empty-state-profile">
@@ -183,7 +191,7 @@ function renderProfilePosts(filter) {
     `;
     return;
   }
-  
+
   const postsHTML = postsToShow.map((post, index) => `
     <div class="profile-post-card" data-index="${index}">
       <div class="post-card-front">
@@ -220,7 +228,7 @@ function renderProfilePosts(filter) {
       </div>
     </div>
   `).join('');
-  
+
   tabContent.innerHTML = `<div class="profile-posts">${postsHTML}</div>`;
 }
 
@@ -234,7 +242,7 @@ function flipProfileCard(index) {
 function toggleProfileLike(index) {
   if (userPosts[index]) {
     userPosts[index].liked = !userPosts[index].liked;
-    
+
     // Actualizar el tab activo actual
     const activeTab = document.querySelector('.tab-btn.active');
     if (activeTab) {

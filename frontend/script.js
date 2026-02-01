@@ -231,13 +231,26 @@ function initNavigation() {
         loadNotificationsSection();
         break;
       case 'Crear':
-        loadCreateSection();
+        if (!isLoggedIn()) {
+          loadAuthSection();
+        } else {
+          loadCreateSection();
+        }
         break;
       case 'Perfil':
-        loadProfileSection();
+        if (!isLoggedIn()) {
+          loadAuthSection();
+        } else {
+          loadProfileSection();
+        }
         break;
       case 'Más':
-        console.log('Más clicked');
+        // Logout temporal para pruebas o si el usuario quiere salir
+        if (isLoggedIn()) {
+          if (confirm('¿Quieres cerrar sesión?')) {
+            logout();
+          }
+        }
         break;
     }
   }
@@ -260,7 +273,7 @@ function initNavigation() {
 }
 
 // Configuración del backend - detecta automáticamente si está en producción o desarrollo
-const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? null // null = modo desarrollo, intentará puertos locales
   : 'https://testing-ivmx.onrender.com'; // ✅ URL de producción en Render
 
@@ -280,10 +293,10 @@ async function fetchWithFallback(endpoint) {
       throw error;
     }
   }
-  
+
   // Modo desarrollo: intenta puertos locales
   const ports = [3001, 3000]; // Primero intenta Docker (3001), luego directo (3000)
-  
+
   for (const port of ports) {
     try {
       console.log(`🔄 Intentando conectar al backend en puerto ${port}...`);
@@ -317,7 +330,17 @@ async function initApp() {
 
     data = await fetchWithFallback('/api/recommendations');
     console.log(`📦 Recomendaciones cargadas: ${data.length} recomendaciones recibidas del backend`);
+    console.log(`📦 Recomendaciones cargadas: ${data.length} recomendaciones recibidas del backend`);
     console.log('✅ ¡Frontend conectado correctamente al backend!');
+
+    // Check auth status
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (token && user.username) {
+      console.log(`👤 Usuario logueado: ${user.username}`);
+      // Actualizar UI para usuario logueado (opcional: cambiar icono de perfil)
+    }
+
   } catch (error) {
     console.error('❌ ERROR: No se pudo conectar al backend:', error.message);
     console.log('📋 Cargando datos de prueba (mock data) como respaldo...');
@@ -551,6 +574,47 @@ function loadProfileSection() {
 }
 
 let createCssLoaded = false;
+
+// --- Auth System Integration ---
+
+function isLoggedIn() {
+  return !!localStorage.getItem('token');
+}
+
+function logout() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  window.location.reload();
+}
+
+let authCssLoaded = false;
+
+function loadAuthSection() {
+  const mainEl = document.querySelector('.main-content');
+  if (!mainEl) return;
+
+  // Cargar CSS de Auth si no está cargado
+  if (!authCssLoaded) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'auth/styles.css';
+    document.head.appendChild(link);
+    authCssLoaded = true;
+  }
+
+  // Cargar el HTML fragmento de Auth
+  fetch('auth/index.html')
+    .then(res => res.text())
+    .then(html => {
+      mainEl.innerHTML = html;
+
+      // Cargar script de Auth
+      const script = document.createElement('script');
+      script.src = 'auth/script.js';
+      document.body.appendChild(script);
+    })
+    .catch(err => console.error('Error cargando Auth:', err));
+}
 
 function loadCreateSection() {
   const mainEl = document.querySelector('.main-content');

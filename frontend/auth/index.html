@@ -1,0 +1,53 @@
+<div class="auth-container">
+  <div class="auth-box">
+    <!-- Formulario de Login -->
+    <div id="login-form-container" class="auth-section active">
+      <h2>👋 ¡Hola de nuevo!</h2>
+      <p class="auth-subtitle">Inicia sesión para compartir tus recomendaciones.</p>
+      
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="ejemplo@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Contraseña</label>
+          <input type="password" id="login-password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="auth-btn">Iniciar Sesión 🚀</button>
+      </form>
+      
+      <p class="auth-footer">
+        ¿Aún no tienes cuenta? <a href="#" id="go-to-register">Regístrate aquí</a>
+      </p>
+    </div>
+
+    <!-- Formulario de Registro -->
+    <div id="register-form-container" class="auth-section" style="display: none;">
+      <h2>✨ Únete a Pixel & Frames</h2>
+      <p class="auth-subtitle">Crea tu perfil y empieza a combinar juegos y películas.</p>
+      
+      <form id="register-form">
+        <div class="form-group">
+          <label for="register-username">Nombre de Usuario</label>
+          <input type="text" id="register-username" placeholder="@usuario_gamer" required>
+        </div>
+        <div class="form-group">
+          <label for="register-email">Email</label>
+          <input type="email" id="register-email" placeholder="ejemplo@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="register-password">Contraseña</label>
+          <input type="password" id="register-password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="auth-btn">Crear Cuenta ✨</button>
+      </form>
+      
+      <p class="auth-footer">
+        ¿Ya tienes cuenta? <a href="#" id="go-to-login">Inicia sesión</a>
+      </p>
+    </div>
+    
+    <div id="auth-error" class="auth-error" style="display: none;"></div>
+  </div>
+</div>
