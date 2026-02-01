@@ -604,9 +604,10 @@ function logout() {
 
 let authCssLoaded = false;
 
-function loadAuthSection() {
-  const mainEl = document.querySelector('.main-content');
-  if (!mainEl) return;
+// Nuevo cargador para la Landing Page (Gatekeeper)
+function loadAuthIntoLanding() {
+  const landingEl = document.getElementById('landing-container');
+  if (!landingEl) return;
 
   // Cargar CSS de Auth si no está cargado
   if (!authCssLoaded) {
@@ -621,14 +622,24 @@ function loadAuthSection() {
   fetch('auth/index.html')
     .then(res => res.text())
     .then(html => {
-      mainEl.innerHTML = html;
+      landingEl.innerHTML = html;
 
       // Cargar script de Auth
+      // Eliminar script anterior si existe para reiniciar eventos
+      const oldScript = document.getElementById('auth-script');
+      if (oldScript) oldScript.remove();
+
       const script = document.createElement('script');
       script.src = 'auth/script.js';
+      script.id = 'auth-script';
       document.body.appendChild(script);
     })
     .catch(err => console.error('Error cargando Auth:', err));
+}
+
+function loadAuthSection() {
+  // Si se intenta cargar auth manualmente, recargamos para que el Gatekeeper actúe
+  window.location.reload();
 }
 
 function loadCreateSection() {
