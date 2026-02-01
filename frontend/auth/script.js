@@ -1,10 +1,11 @@
-// URL base (debería venir de config global, pero por ahora...)
-// Si window.API_BASE_URL no está definido (porque script.js carga antes o después), definimos fallback
+// URL base
 const AUTH_API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:3000/api/auth'
     : 'https://testing-ivmx.onrender.com/api/auth';
 
-document.addEventListener('DOMContentLoaded', () => {
+function initAuth() {
+    console.log('🔐 Inicializando sistema de autenticación...');
+
     // Referencias
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
@@ -14,20 +15,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const registerSection = document.getElementById('register-form-container');
     const errorBox = document.getElementById('auth-error');
 
-    // Toggles
-    goToRegister.addEventListener('click', (e) => {
-        e.preventDefault();
-        loginSection.style.display = 'none';
-        registerSection.style.display = 'block';
-        clearError();
-    });
+    if (!loginForm || !registerForm) {
+        console.error('❌ No se encontraron los formularios de autenticación en el DOM');
+        return;
+    }
 
-    goToLogin.addEventListener('click', (e) => {
-        e.preventDefault();
-        registerSection.style.display = 'none';
-        loginSection.style.display = 'block';
-        clearError();
-    });
+    // Toggles
+    if (goToRegister) {
+        goToRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (loginSection) loginSection.style.display = 'none';
+            if (registerSection) registerSection.style.display = 'block';
+            clearError();
+        });
+    }
+
+    if (goToLogin) {
+        goToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (registerSection) registerSection.style.display = 'none';
+            if (loginSection) loginSection.style.display = 'block';
+            clearError();
+        });
+    }
 
     // Login Submit
     loginForm.addEventListener('submit', async (e) => {
@@ -91,12 +101,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showError(msg) {
-        errorBox.textContent = msg;
-        errorBox.style.display = 'block';
+        if (errorBox) {
+            errorBox.textContent = msg;
+            errorBox.style.display = 'block';
+        } else {
+            alert(msg);
+        }
     }
 
     function clearError() {
-        errorBox.style.display = 'none';
+        if (errorBox) errorBox.style.display = 'none';
     }
 
     function completeLogin(data) {
@@ -106,12 +120,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         alert(`¡Bienvenido ${data.user.username}!`);
 
-        // Recargar la página para que el script principal detecte el login y muestre el perfil real
-        if (window.location.reload) {
-            window.location.reload();
-        }
-
-        // O si quisiéramos redirigir manualmente:
-        // loadProfileSection(); 
+        // Recargar la página
+        window.location.reload();
     }
-});
+}
+
+// Ejecutar initAuth inmediatamente si el DOM ya está listo (porque se carga dinámicamente)
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAuth);
+} else {
+    initAuth();
+}
