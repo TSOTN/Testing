@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db');
+const auth = require('../middleware/auth');
 
 // Obtener todos los posts (Feed)
 router.get('/', async (req, res) => {
@@ -40,11 +41,13 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Crear nuevo post
-router.post('/', async (req, res) => {
-    // TODO: Validar Token JWT aquí (Middleware)
+// Crear nuevo post (Protegido con middleware 'auth')
+router.post('/', auth, async (req, res) => {
+    // El middleware 'auth' ya verificó el token y puso el usuario en req.user
+    const userId = req.user.id;
 
-    const { userId, frontTitle, frontDesc, frontImg, backTitle, backDesc, backImg } = req.body;
+    // Obtenemos los datos del post del body (ya no esperamos userId aquí)
+    const { frontTitle, frontDesc, frontImg, backTitle, backDesc, backImg } = req.body;
 
     try {
         const result = await pool.query(
@@ -54,7 +57,17 @@ router.post('/', async (req, res) => {
             [userId, frontTitle, frontDesc, frontImg, backTitle, backDesc, backImg]
         );
 
-        res.json(result.rows[0]);
+        // Devolver el post completo con datos del autor (extra query para simplicidad)
+        const authorData = await pool.query('SELECT username, avatar_url FROM users WHERE id = $1', [userId]);
+
+        const newPost = {
+            ...result.rows[0],
+            author: '@' + authorData.rows[0].username,
+            avatar: authorData.rows[0].avatar_url,
+            timestamp: 'Ahora'
+        };
+
+        res.json(newPost);
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ error: 'Error creando post' });
