@@ -171,49 +171,52 @@ function publishPost() {
   const storedUser = localStorage.getItem('user');
   const user = storedUser ? JSON.parse(storedUser) : { username: 'Anónimo', avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Anon' };
 
-  const newPost = {
-    id: Date.now(),
-    author: '@' + user.username,
-    avatar: user.avatar_url || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + user.username,
-    timestamp: 'Ahora',
+  // Preparar datos para backend
+  const postData = {
     frontTitle: `🎮 ${gameTitle}`,
     frontDesc: gameDesc,
     frontImg: gameImageURL || 'https://via.placeholder.com/400x250/111122/00ffff?text=Game',
     backTitle: `🎬 ${movieTitle}`,
     backDesc: movieDesc,
-    backImg: movieImageURL || 'https://via.placeholder.com/400x250/111122/ff00c8?text=Movie',
-    likes: 0,
-    comments: 0,
-    liked: false,
-    tags: tags.split(',').map(t => t.trim()).filter(t => t)
+    backImg: movieImageURL || 'https://via.placeholder.com/400x250/111122/ff00c8?text=Movie'
   };
 
-  // Agregar a la lista de posts (si existe la variable global)
-  if (typeof posts !== 'undefined') {
-    posts.unshift(newPost);
-  }
+  // Enviar al Backend
+  const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:3000/api/posts'
+    : 'https://testing-ivmx.onrender.com/api/posts';
 
-  // Mostrar mensaje de éxito
-  showSuccessMessage();
+  fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-auth-token': localStorage.getItem('token') // Token de autenticación
+    },
+    body: JSON.stringify(postData)
+  })
+    .then(res => {
+      if (!res.ok) throw new Error('Error publicando post');
+      return res.json();
+    })
+    .then(newPost => {
+      // Agregar visualmente (opcional si recargamos)
+      if (typeof posts !== 'undefined') {
+        posts.unshift(newPost);
+      }
+      showSuccessMessage();
+      document.getElementById('create-post-form').reset();
+      gameImageURL = '';
+      movieImageURL = '';
 
-  // Limpiar formulario
-  document.getElementById('create-post-form').reset();
-  gameImageURL = '';
-  movieImageURL = '';
-  document.getElementById('game-preview').textContent = '🖼️';
-  document.getElementById('movie-preview').textContent = '🖼️';
-
-  // Cerrar modal si está abierto
-  hidePreview();
-
-  // Esperar 2 segundos antes de regresar al inicio
-  setTimeout(() => {
-    // Navegar a Inicio
-    const homeBtn = document.querySelector('[title="Inicio"]');
-    if (homeBtn) {
-      homeBtn.click();
-    }
-  }, 2000);
+      setTimeout(() => {
+        const homeBtn = document.querySelector('[title="Inicio"]');
+        if (homeBtn) homeBtn.click();
+      }, 2000);
+    })
+    .catch(err => {
+      alert('Error publicando: ' + err.message);
+      console.error(err);
+    });
 }
 
 function showSuccessMessage() {
