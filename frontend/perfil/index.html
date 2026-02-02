@@ -7,7 +7,8 @@
       <div class="profile-details">
         <h1 class="profile-name">Tu Nombre</h1>
         <p class="profile-handle">@tuusuario</p>
-        <p class="profile-bio">Apasionado por los videojuegos y el cine. Aquí comparto mis recomendaciones favoritas 🎮🎬</p>
+        <p class="profile-bio">Apasionado por los videojuegos y el cine. Aquí comparto mis recomendaciones favoritas
+          🎮🎬</p>
         <div class="profile-stats">
           <div class="stat">
             <span class="stat-number">42</span>
@@ -45,5 +46,26 @@
     <div class="tab-content" id="tab-saved">
       <!-- Los posts guardados se renderizarán aquí -->
     </div>
+  </div>
+</div>
+
+<!-- Modal Editar Perfil -->
+<div id="edit-profile-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h2>Editar Perfil</h2>
+    <form id="edit-profile-form">
+      <div class="form-group">
+        <label for="edit-bio">Biografía</label>
+        <textarea id="edit-bio" rows="3" placeholder="Cuéntanos sobre ti..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="edit-avatar">URL del Avatar</label>
+        <input type="url" id="edit-avatar" placeholder="https://..." />
+        <small>Vista previa:</small>
+        <img id="avatar-preview" src="" alt="Vista previa" class="avatar-preview" />
+      </div>
+      <button type="submit" class="save-btn">Guardar Cambios</button>
+    </form>
   </div>
 </div>
