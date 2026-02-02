@@ -3,10 +3,13 @@ const router = express.Router();
 const pool = require('../db');
 const auth = require('../middleware/auth');
 
-// Obtener todos los posts (Feed)
+// Obtener todos los posts (Feed) o filtrar por autor
 router.get('/', async (req, res) => {
     try {
-        const result = await pool.query(`
+        const currentUserId = req.query.user_id || 0; // Para saber si dio like
+        const filterAuthorId = req.query.author_id; // Para filtrar por perfil
+
+        let queryText = `
       SELECT 
         p.*, 
         u.username as author, 
@@ -14,15 +17,25 @@ router.get('/', async (req, res) => {
         EXISTS(SELECT 1 FROM post_likes pl WHERE pl.post_id = p.id AND pl.user_id = $1) as liked
       FROM posts p
       JOIN users u ON p.user_id = u.id
-      ORDER BY p.created_at DESC
-    `, [req.query.user_id || 0]); // user_id opcional para saber si dio like
+    `;
+
+        const queryParams = [currentUserId];
+
+        if (filterAuthorId) {
+            queryText += ` WHERE p.user_id = $2`;
+            queryParams.push(filterAuthorId);
+        }
+
+        queryText += ` ORDER BY p.created_at DESC`;
+
+        const result = await pool.query(queryText, queryParams);
 
         // Mapear al formato que espera el frontend
         const posts = result.rows.map(row => ({
             id: row.id,
             author: '@' + row.author,
             avatar: row.avatar,
-            timestamp: new Date(row.created_at).toLocaleDateString(), // Simplificado
+            timestamp: new Date(row.created_at).toLocaleDateString(),
             frontTitle: row.front_title,
             frontDesc: row.front_desc,
             frontImg: row.front_img,
