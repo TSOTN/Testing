@@ -28,10 +28,107 @@ async function initializeProfile() {
 
   renderProfileHeader();
   setupTabListeners();
+  setupEditProfile(); // Initialize Edit Modal
 
   // 2. Cargar Posts del Usuario desde Backend
   await fetchUserPosts();
 }
+
+function setupEditProfile() {
+  const modal = document.getElementById('edit-profile-modal');
+  const btn = document.querySelector('.edit-profile-btn');
+  const closeBtn = document.querySelector('.close-modal');
+  const form = document.getElementById('edit-profile-form');
+
+  const bioInput = document.getElementById('edit-bio');
+  const avatarInput = document.getElementById('edit-avatar');
+  const avatarPreview = document.getElementById('avatar-preview');
+
+  if (!modal || !btn || !form) return;
+
+  // Open Modal
+  btn.onclick = () => {
+    modal.style.display = "flex";
+    bioInput.value = currentUser.bio || '';
+    avatarInput.value = currentUser.avatar || '';
+    avatarPreview.src = currentUser.avatar || 'https://via.placeholder.com/80';
+  }
+
+  // Close Modal
+  closeBtn.onclick = () => {
+    modal.style.display = "none";
+  }
+
+  // Close on click outside
+  window.onclick = (event) => {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  // Preview Avatar
+  avatarInput.oninput = () => {
+    avatarPreview.src = avatarInput.value;
+  }
+
+  // Handle Submit
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+
+    const newBio = bioInput.value;
+    const newAvatar = avatarInput.value;
+
+    // Optimistic UI Update (optional)
+    const saveBtn = form.querySelector('.save-btn');
+    const originalText = saveBtn.textContent;
+    saveBtn.textContent = 'Guardando...';
+    saveBtn.disabled = true;
+
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`${PROFILE_API_URL}/api/users/me`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ bio: newBio, avatar_url: newAvatar })
+      });
+
+      if (!res.ok) throw new Error('Error al actualizar perfil');
+
+      const updatedUser = await res.json();
+
+      // Update current user object
+      currentUser.bio = updatedUser.bio;
+      currentUser.avatar = updatedUser.avatar_url;
+
+      // Update LocalStorage 'user' object
+      const userToStore = {
+        ...currentUser,
+        avatar_url: updatedUser.avatar_url,
+        bio: updatedUser.bio
+      };
+      localStorage.setItem('user', JSON.stringify(userToStore));
+
+      // Update UI
+      renderProfileHeader();
+
+      // Close Modal
+      modal.style.display = "none";
+      alert('¡Perfil actualizado con éxito! ✨');
+
+    } catch (error) {
+      console.error(error);
+      alert('Hubo un error al guardar los cambios.');
+    } finally {
+      saveBtn.textContent = originalText;
+      saveBtn.disabled = false;
+    }
+  }
+}
+
+// ... rest of the file ...
 
 async function fetchUserPosts() {
   try {
