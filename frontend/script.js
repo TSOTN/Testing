@@ -398,6 +398,17 @@ async function initApp() {
 
     // Renderizamos con los datos de prueba
     renderFeed();
+
+    // IMPORTANTE: Mostrar landing o app aunque falle el backend
+    const token = localStorage.getItem('token');
+    if (!token) {
+      document.getElementById('app-container').style.display = 'none';
+      document.getElementById('landing-container').style.display = 'flex';
+      loadAuthIntoLanding();
+    } else {
+      document.getElementById('app-container').style.display = 'flex';
+      document.getElementById('landing-container').style.display = 'none';
+    }
   }
 
   initNavigation();
