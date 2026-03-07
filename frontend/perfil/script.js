@@ -90,7 +90,7 @@ function setupEditProfile() {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'x-auth-token': token
         },
         body: JSON.stringify({ bio: newBio, avatar_url: newAvatar })
       });

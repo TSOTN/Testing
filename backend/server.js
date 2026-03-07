@@ -217,9 +217,7 @@ app.get('/api/recommendations', (req, res) => {
   res.json(data);
 });
 
-app.get('/api/posts', (req, res) => {
-  res.json(posts);
-});
+// GET /api/posts lo maneja routes/posts.js (desde la base de datos)
 
 // Render y otros servicios cloud asignan el puerto automáticamente, si no existe usa 3000 para desarrollo local
 const PORT = process.env.PORT || 3000;

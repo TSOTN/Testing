@@ -245,12 +245,7 @@ function initNavigation() {
         }
         break;
       case 'Más':
-        // Logout temporal para pruebas o si el usuario quiere salir
-        if (isLoggedIn()) {
-          if (confirm('¿Quieres cerrar sesión?')) {
-            logout();
-          }
-        }
+        loadMasSection();
         break;
     }
   }
@@ -324,36 +319,26 @@ async function initApp() {
 
   try {
     console.log('🚀 Iniciando conexión con el backend...');
-    posts = await fetchWithFallback('/api/posts');
+
+    // Estilo TikTok: siempre mostrar la app (feed visible sin login)
+    document.getElementById('landing-container').style.display = 'none';
+    document.getElementById('app-container').style.display = 'flex';
+
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const userId = user.id || 0;
+    const postsUrl = userId ? `/api/posts?user_id=${userId}` : '/api/posts';
+    posts = await fetchWithFallback(postsUrl);
     console.log(`📦 Posts cargados: ${posts.length} posts recibidos del backend`);
     renderFeed();
 
     data = await fetchWithFallback('/api/recommendations');
-    console.log(`📦 Recomendaciones cargadas: ${data.length} recomendaciones recibidas del backend`);
-    console.log(`📦 Recomendaciones cargadas: ${data.length} recomendaciones recibidas del backend`);
+    console.log(`📦 Recomendaciones cargadas: ${data.length}`);
     console.log('✅ ¡Frontend conectado correctamente al backend!');
 
-    console.log('✅ ¡Frontend conectado correctamente al backend!');
-
-    // Check auth status for Gatekeeper
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      // No logged in -> Show Landing (Auth)
-      console.log('🔒 Usuario no logueado. Mostrando Landing Page.');
-      document.getElementById('app-container').style.display = 'none';
-      document.getElementById('landing-container').style.display = 'flex';
-      loadAuthIntoLanding();
+    if (user.username) {
+      console.log(`👤 Sesión: ${user.username}`);
     } else {
-      // Logged in -> Show App
-      console.log('🔓 Usuario logueado. Entrando a la App.');
-      document.getElementById('app-container').style.display = 'flex';
-      document.getElementById('landing-container').style.display = 'none';
-
-      const user = JSON.parse(localStorage.getItem('user') || '{}');
-      if (user.username) {
-        console.log(`👤 Bienvenido de nuevo: ${user.username}`);
-      }
+      console.log('🔓 Navegando como invitado. Inicia sesión en "Más" cuando quieras.');
     }
 
   } catch (error) {
@@ -361,54 +346,17 @@ async function initApp() {
     console.log('📋 Cargando datos de prueba (mock data) como respaldo...');
 
     posts = [
-      {
-        frontImg: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg',
-        frontTitle: 'Cyberpunk 2077',
-        frontDesc: 'RPG de mundo abierto en un futuro distópico.',
-        backImg: 'https://m.media-amazon.com/images/M/MV5BMDk4MTNhNGMtZTE2Ni00MTIxLTk2NzUtYjI1ZWM5NmRkODM5XkEyXkFqcGdeQXVyODc0OTEyNDU@._V1_.jpg',
-        backTitle: 'Blade Runner 2049',
-        backDesc: 'Un nuevo blade runner descubre un secreto mucho tiempo enterrado.',
-        liked: false,
-        likes: 124,
-        comments: 45
-      },
-      {
-        frontImg: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg',
-        frontTitle: 'Red Dead Redemption 2',
-        frontDesc: 'Épica historia de forajidos en el corazón de América.',
-        backImg: 'https://m.media-amazon.com/images/M/MV5BMjA5ZjA3ZjMtMzA2ZC00ZGY5LTg3ZTEtMDQ0MjEzNWYxMjFjXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg',
-        backTitle: 'The Hateful Eight',
-        backDesc: 'Ocho extraños atrapados en una cabaña durante una tormenta.',
-        liked: true,
-        likes: 892,
-        comments: 120
-      },
-      {
-        frontImg: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/374320/header.jpg',
-        frontTitle: 'Dark Souls III',
-        frontDesc: 'Desafía a la oscuridad en este RPG de acción aclamado.',
-        backImg: 'https://m.media-amazon.com/images/M/MV5BNDQ2ZGRhYjYtYjBmYy00ZjBiLTg3ZDktOTRlYzIwMWNhMjgwXkEyXkFqcGdeQXVyNjE5MjUyOTM@._V1_.jpg',
-        backTitle: 'Berserk (1997)',
-        backDesc: 'La historia de Guts y su búsqueda de venganza en un mundo oscuro.',
-        liked: false,
-        likes: 567,
-        comments: 89
-      }
+      { author: '@Invitado', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=1', timestamp: 'Hace 2h', frontImg: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg', frontTitle: 'Cyberpunk 2077', frontDesc: 'RPG de mundo abierto en un futuro distópico.', backImg: 'https://m.media-amazon.com/images/M/MV5BMDk4MTNhNGMtZTE2Ni00MTIxLTk2NzUtYjI1ZWM5NmRkODM5XkEyXkFqcGdeQXVyODc0OTEyNDU@._V1_.jpg', backTitle: 'Blade Runner 2049', backDesc: 'Un nuevo blade runner descubre un secreto mucho tiempo enterrado.', liked: false, likes: 124, comments: 45 },
+      { author: '@Invitado', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=2', timestamp: 'Hace 5h', frontImg: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg', frontTitle: 'Red Dead Redemption 2', frontDesc: 'Épica historia de forajidos en el corazón de América.', backImg: 'https://m.media-amazon.com/images/M/MV5BMjA5ZjA3ZjMtMzA2ZC00ZGY5LTg3ZTEtMDQ0MjEzNWYxMjFjXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg', backTitle: 'The Hateful Eight', backDesc: 'Ocho extraños atrapados en una cabaña durante una tormenta.', liked: true, likes: 892, comments: 120 },
+      { author: '@Invitado', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=3', timestamp: 'Hace 1d', frontImg: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/374320/header.jpg', frontTitle: 'Dark Souls III', frontDesc: 'Desafía a la oscuridad en este RPG de acción aclamado.', backImg: 'https://m.media-amazon.com/images/M/MV5BNDQ2ZGRhYjYtYjBmYy00ZjBiLTg3ZDktOTRlYzIwMWNhMjgwXkEyXkFqcGdeQXVyNjE5MjUyOTM@._V1_.jpg', backTitle: 'Berserk (1997)', backDesc: 'La historia de Guts y su búsqueda de venganza en un mundo oscuro.', liked: false, likes: 567, comments: 89 }
     ];
 
     // Renderizamos con los datos de prueba
     renderFeed();
 
-    // IMPORTANTE: Mostrar landing o app aunque falle el backend
-    const token = localStorage.getItem('token');
-    if (!token) {
-      document.getElementById('app-container').style.display = 'none';
-      document.getElementById('landing-container').style.display = 'flex';
-      loadAuthIntoLanding();
-    } else {
-      document.getElementById('app-container').style.display = 'flex';
-      document.getElementById('landing-container').style.display = 'none';
-    }
+    // Siempre mostrar app (estilo TikTok) aunque falle el backend
+    document.getElementById('landing-container').style.display = 'none';
+    document.getElementById('app-container').style.display = 'flex';
   }
 
   initNavigation();
@@ -649,8 +597,60 @@ function loadAuthIntoLanding() {
 }
 
 function loadAuthSection() {
-  // Si se intenta cargar auth manualmente, recargamos para que el Gatekeeper actúe
-  window.location.reload();
+  // Mostrar inicio de sesión dentro de la app (estilo TikTok): va a la sección "Más" que incluye auth
+  loadMasSection();
+}
+
+let masCssLoaded = false;
+
+function loadMasSection() {
+  const mainEl = document.querySelector('.main-content');
+  if (!mainEl) return;
+
+  if (!masCssLoaded) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'auth/styles.css';
+    document.head.appendChild(link);
+    masCssLoaded = true;
+  }
+
+  if (isLoggedIn()) {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    mainEl.innerHTML = `
+      <div class="mas-section">
+        <h1>Más</h1>
+        <p class="subtitle">Opciones de tu cuenta</p>
+        <div class="mas-panel">
+          <div class="mas-user">
+            <img src="${user.avatar_url || user.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + (user.username || '')}" alt="" class="mas-avatar" />
+            <div>
+              <strong>${user.username || 'Usuario'}</strong>
+              <span class="mas-handle">@${user.username || 'usuario'}</span>
+            </div>
+          </div>
+          <button type="button" class="mas-logout-btn" id="mas-logout-btn">Cerrar sesión</button>
+        </div>
+      </div>
+    `;
+    const logoutBtn = document.getElementById('mas-logout-btn');
+    if (logoutBtn) logoutBtn.addEventListener('click', () => { logout(); });
+    return;
+  }
+
+  // No logueado: mostrar formulario de Iniciar sesión / Registrarse
+  fetch('auth/index.html')
+    .then(res => res.text())
+    .then(html => {
+      mainEl.innerHTML = '<div class="mas-section"><h1>Más</h1><p class="subtitle">Inicia sesión o regístrate cuando quieras</p>' + html + '</div>';
+      const oldScript = document.getElementById('auth-script');
+      if (oldScript) oldScript.remove();
+      const script = document.createElement('script');
+      script.src = 'auth/script.js';
+      script.id = 'auth-script';
+      document.body.appendChild(script);
+    })
+    .catch(err => console.error('Error cargando Más/Auth:', err));
 }
 
 function loadCreateSection() {
