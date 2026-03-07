@@ -681,10 +681,19 @@ function loadCreateSection() {
     .catch(err => console.error('Error cargando Crear:', err));
 }
 
-function restoreHomeSection() {
+async function restoreHomeSection() {
   const mainEl = document.querySelector('.main-content');
   if (!mainEl) return;
   mainEl.innerHTML = originalMainHTML;
+  // Volver a cargar posts desde el servidor para ver los últimos (incluido el que acabas de publicar)
+  try {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const userId = user.id || 0;
+    const postsUrl = userId ? `/api/posts?user_id=${userId}` : '/api/posts';
+    posts = await fetchWithFallback(postsUrl);
+  } catch (e) {
+    console.warn('No se pudieron actualizar los posts:', e.message);
+  }
   renderFeed();
 }
 

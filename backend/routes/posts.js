@@ -70,14 +70,24 @@ router.post('/', auth, async (req, res) => {
             [userId, frontTitle, frontDesc, frontImg, backTitle, backDesc, backImg]
         );
 
-        // Devolver el post completo con datos del autor (extra query para simplicidad)
+        // Devolver en el mismo formato que GET /api/posts (camelCase) para que el feed lo muestre bien
         const authorData = await pool.query('SELECT username, avatar_url FROM users WHERE id = $1', [userId]);
+        const row = result.rows[0];
 
         const newPost = {
-            ...result.rows[0],
+            id: row.id,
             author: '@' + authorData.rows[0].username,
             avatar: authorData.rows[0].avatar_url,
-            timestamp: 'Ahora'
+            timestamp: 'Ahora',
+            frontTitle: row.front_title,
+            frontDesc: row.front_desc,
+            frontImg: row.front_img,
+            backTitle: row.back_title,
+            backDesc: row.back_desc,
+            backImg: row.back_img,
+            likes: row.likes_count ?? 0,
+            comments: row.comments_count ?? 0,
+            liked: false
         };
 
         res.json(newPost);
