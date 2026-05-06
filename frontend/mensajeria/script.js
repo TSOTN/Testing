@@ -158,7 +158,7 @@ function sendMessage() {
 }
 
 // Event listeners
-function initMensajeria() {
+document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('search-conversations');
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
@@ -182,10 +182,4 @@ function initMensajeria() {
 
   // Renderizar conversaciones iniciales
   renderConversations();
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initMensajeria);
-} else {
-  initMensajeria();
-}
+});

@@ -165,13 +165,7 @@ function setupFilters() {
 }
 
 // Inicializar
-function initNotificaciones() {
+document.addEventListener('DOMContentLoaded', () => {
   setupFilters();
   renderNotifications();
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initNotificaciones);
-} else {
-  initNotificaciones();
-}
+});
