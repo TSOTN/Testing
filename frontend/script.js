@@ -458,7 +458,6 @@ function loadExploreSection() {
 }
 
 let messagingCssLoaded = false;
-let messagingScriptLoaded = false;
 
 function loadMessagingSection() {
   const mainEl = document.querySelector('.main-content');
@@ -481,20 +480,14 @@ function loadMessagingSection() {
       mainEl.innerHTML = html;
 
       // Cargar el script de mensajería
-      if (!messagingScriptLoaded) {
-        const script = document.createElement('script');
-        script.src = 'mensajeria/script.js';
-        document.body.appendChild(script);
-        messagingScriptLoaded = true;
-      } else if (typeof initMensajeria === 'function') {
-        initMensajeria();
-      }
+      const script = document.createElement('script');
+      script.src = 'mensajeria/script.js';
+      document.body.appendChild(script);
     })
     .catch(err => console.error('Error cargando Mensajería:', err));
 }
 
 let notificationsCssLoaded = false;
-let notificationsScriptLoaded = false;
 
 function loadNotificationsSection() {
   const mainEl = document.querySelector('.main-content');
@@ -517,20 +510,14 @@ function loadNotificationsSection() {
       mainEl.innerHTML = html;
 
       // Cargar el script de notificaciones
-      if (!notificationsScriptLoaded) {
-        const script = document.createElement('script');
-        script.src = 'notificaciones/script.js';
-        document.body.appendChild(script);
-        notificationsScriptLoaded = true;
-      } else if (typeof initNotificaciones === 'function') {
-        initNotificaciones();
-      }
+      const script = document.createElement('script');
+      script.src = 'notificaciones/script.js';
+      document.body.appendChild(script);
     })
     .catch(err => console.error('Error cargando Notificaciones:', err));
 }
 
 let profileCssLoaded = false;
-let profileScriptLoaded = false;
 
 function loadProfileSection() {
   const mainEl = document.querySelector('.main-content');
@@ -553,14 +540,9 @@ function loadProfileSection() {
       mainEl.innerHTML = html;
 
       // Cargar el script de perfil
-      if (!profileScriptLoaded) {
-        const script = document.createElement('script');
-        script.src = 'perfil/script.js';
-        document.body.appendChild(script);
-        profileScriptLoaded = true;
-      } else if (typeof initializeProfile === 'function') {
-        initializeProfile();
-      }
+      const script = document.createElement('script');
+      script.src = 'perfil/script.js';
+      document.body.appendChild(script);
     })
     .catch(err => console.error('Error cargando Perfil:', err));
 }
@@ -671,7 +653,6 @@ function loadMasSection() {
     .catch(err => console.error('Error cargando Más/Auth:', err));
 }
 let createCssLoaded = false;
-let createScriptLoaded = false;
 
 function loadCreateSection() {
   const mainEl = document.querySelector('.main-content');
@@ -694,14 +675,9 @@ function loadCreateSection() {
       mainEl.innerHTML = html;
 
       // Cargar el script de crear
-      if (!createScriptLoaded) {
-        const script = document.createElement('script');
-        script.src = 'crear/script.js';
-        document.body.appendChild(script);
-        createScriptLoaded = true;
-      } else if (typeof initializeCreate === 'function') {
-        initializeCreate();
-      }
+      const script = document.createElement('script');
+      script.src = 'crear/script.js';
+      document.body.appendChild(script);
     })
     .catch(err => console.error('Error cargando Crear:', err));
 }
