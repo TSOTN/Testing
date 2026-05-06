@@ -3,7 +3,11 @@ let gameImageURL = '';
 let movieImageURL = '';
 
 // Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', initializeCreate);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeCreate);
+} else {
+  initializeCreate();
+}
 
 function initializeCreate() {
   setupImageUploads();

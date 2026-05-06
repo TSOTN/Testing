@@ -8,8 +8,11 @@ const PROFILE_API_URL = window.location.hostname === 'localhost' || window.locat
 
 let userPosts = [];
 let currentUser = {};
-
-document.addEventListener('DOMContentLoaded', initializeProfile);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeProfile);
+} else {
+  initializeProfile();
+}
 
 async function initializeProfile() {
   // 1. Cargar Usuario del LocalStorage
