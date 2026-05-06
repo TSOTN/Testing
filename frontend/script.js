@@ -669,6 +669,7 @@ function loadMasSection() {
       document.body.appendChild(script);
     })
     .catch(err => console.error('Error cargando Más/Auth:', err));
+}
 let createCssLoaded = false;
 let createScriptLoaded = false;
 
