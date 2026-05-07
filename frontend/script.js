@@ -373,12 +373,246 @@ let exploreCssLoaded = false;
 // Datos de Explorar (globales para reutilizar)
 const exploreData = [
   { type: 'juego', title: 'Hollow Knight', img: 'https://steamcdn-a.akamaihd.net/steam/apps/367520/header.jpg', desc: 'Metroidvania sombrío y preciso.' },
-  { type: 'pelicula', title: 'Akira', img: 'https://img.youtube.com/vi/0sK3D3t2JTE/maxresdefault.jpg', desc: 'Clásico anime cyberpunk.' },
+  { type: 'pelicula', title: 'Akira', img: 'https://upload.wikimedia.org/wikipedia/en/5/5d/AKIRA_%281988_poster%29.jpg', desc: 'Clásico anime cyberpunk.' },
   { type: 'juego', title: 'Ori and the Blind Forest', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/387290/header.jpg', desc: 'Plataformas y emoción.' },
-  { type: 'pelicula', title: 'Ghost in the Shell', img: 'https://img.youtube.com/vi/ztWT3rjVQ2M/maxresdefault.jpg', desc: 'Identidad y tecnología.' },
+  { type: 'pelicula', title: 'Ghost in the Shell', img: 'https://upload.wikimedia.org/wikipedia/en/3/3e/Ghost_in_the_Shell_%281995_film%29_poster.jpg', desc: 'Identidad y tecnología.' },
   { type: 'juego', title: 'Celeste', img: 'https://cdn.akamai.steamstatic.com/steam/apps/504230/header.jpg', desc: 'Plataformas desafiantes.' },
-  { type: 'pelicula', title: 'Paprika', img: 'https://img.youtube.com/vi/VIhC8T7A8qI/maxresdefault.jpg', desc: 'Sueños y realidad entrelazados.' }
+  { type: 'pelicula', title: 'Paprika', img: 'https://upload.wikimedia.org/wikipedia/en/0/0f/Paprikaanimeposter.jpg', desc: 'Sueños y realidad entrelazados.' }
 ];
+
+function ensureExploreModal() {
+  if (document.getElementById('explore-modal-overlay')) return;
+
+  const overlay = document.createElement('div');
+  overlay.id = 'explore-modal-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.style.cssText = [
+    'position: fixed',
+    'inset: 0',
+    'background: rgba(0,0,0,0.65)',
+    'backdrop-filter: blur(6px)',
+    'display: none',
+    'align-items: center',
+    'justify-content: center',
+    'padding: 18px',
+    'z-index: 9999'
+  ].join(';');
+
+  overlay.innerHTML = `
+    <div id="explore-modal" style="
+      width: min(720px, 100%);
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      position: relative;
+    ">
+      <button id="explore-modal-close" type="button" aria-label="Cerrar" style="
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        border: 2px solid var(--accent1);
+        background: rgba(0,255,255,0.08);
+        color: var(--accent1);
+        cursor: pointer;
+        font-size: 18px;
+      ">✕</button>
+      <div id="explore-modal-hero" style="height: 220px; position: relative; overflow: hidden; background: #0b0b12;">
+        <img id="explore-modal-img" alt="" style="width:100%;height:100%;object-fit:cover;opacity:0.92;transform: scale(1.02);filter: saturate(1.15) contrast(1.05);" />
+        <canvas id="explore-hk-canvas" width="1200" height="500" style="position:absolute;inset:0;width:100%;height:100%;display:none;"></canvas>
+        <div id="explore-modal-glow" style="position:absolute;inset:0;background: radial-gradient(circle at 30% 20%, rgba(0,255,255,0.18), transparent 45%), radial-gradient(circle at 70% 80%, rgba(255,0,200,0.14), transparent 50%);"></div>
+      </div>
+      <div style="padding: 18px 18px 16px 18px;">
+        <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;">
+          <h2 id="explore-modal-title" style="margin:0;font-size:1.35rem;color:var(--text);letter-spacing:0.2px;"></h2>
+          <span id="explore-modal-badge" style="display:none;padding:6px 10px;border-radius:999px;border:1px solid rgba(0,255,255,0.35);background:rgba(0,255,255,0.08);color:var(--accent1);font-size:0.78rem;">Sello desbloqueado</span>
+        </div>
+        <p id="explore-modal-desc" style="margin:10px 0 0 0;color:var(--muted);line-height:1.45;"></p>
+        <div id="explore-modal-surprise" style="margin-top:14px;padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.12);"></div>
+      </div>
+    </div>
+  `;
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.style.display = 'none';
+  });
+
+  document.body.appendChild(overlay);
+
+  const closeBtn = document.getElementById('explore-modal-close');
+  if (closeBtn) closeBtn.addEventListener('click', () => { overlay.style.display = 'none'; });
+}
+
+function showExploreModal(item) {
+  ensureExploreModal();
+  const overlay = document.getElementById('explore-modal-overlay');
+  const img = document.getElementById('explore-modal-img');
+  const title = document.getElementById('explore-modal-title');
+  const desc = document.getElementById('explore-modal-desc');
+  const surprise = document.getElementById('explore-modal-surprise');
+  const badge = document.getElementById('explore-modal-badge');
+  const canvas = document.getElementById('explore-hk-canvas');
+
+  if (!overlay || !img || !title || !desc || !surprise || !badge || !canvas) return;
+
+  // Base content
+  img.src = item.img;
+  img.alt = item.title;
+  title.textContent = `${item.type === 'juego' ? '🎮' : '🎬'} ${item.title}`;
+  desc.textContent = item.desc;
+  badge.style.display = 'none';
+  canvas.style.display = 'none';
+  surprise.innerHTML = '';
+
+  // Surprise logic
+  if (item.title === 'Hollow Knight') {
+    const key = 'pf_hk_seal_unlocked';
+    const already = localStorage.getItem(key) === '1';
+    localStorage.setItem(key, '1');
+
+    badge.style.display = 'inline-flex';
+    badge.textContent = already ? 'Sello del Vacío (ya lo tienes)' : 'Sello del Vacío desbloqueado';
+
+    surprise.innerHTML = `
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;">
+        <div>
+          <div style="color:var(--accent1);font-weight:700;letter-spacing:0.4px;">Easter egg: “El Vacío te reconoce”</div>
+          <div style="color:var(--muted);margin-top:6px;font-size:0.9rem;">Has desbloqueado un sello secreto. Mira el cielo…</div>
+        </div>
+        <button id="hk-replay" type="button" style="
+          padding:10px 14px;border-radius:12px;border:2px solid var(--accent2);
+          background: rgba(255,0,200,0.10); color: var(--accent2); cursor:pointer;
+          font-family:'Orbitron', sans-serif; font-size:0.85rem;
+        ">Repetir sorpresa</button>
+      </div>
+      <div style="margin-top:12px;color:var(--muted);font-size:0.85rem;">
+        Pista: si vuelves a abrir Explorar, el sello se guarda en tu navegador.
+      </div>
+    `;
+
+    const run = () => runHollowKnightSurprise();
+    setTimeout(run, 80);
+    const replay = document.getElementById('hk-replay');
+    if (replay) replay.addEventListener('click', run);
+  } else {
+    const snippets = [
+      'Sorpresa rápida: te acabo de “emparejar” esto con otra recomendación del universo Pixel & Frames.',
+      'Plot twist: si esto te gustó, tu próxima obsesión ya está a 1 click.',
+      'Modo cine/gaming: activado. Hoy toca descubrir algo nuevo.'
+    ];
+    const pick = snippets[Math.floor(Math.random() * snippets.length)];
+    surprise.innerHTML = `
+      <div style="color:var(--text);font-weight:700;">${pick}</div>
+      <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
+        <span style="padding:6px 10px;border-radius:999px;border:1px solid rgba(0,255,255,0.25);background:rgba(0,255,255,0.06);color:var(--accent1);font-size:0.78rem;">Neón</span>
+        <span style="padding:6px 10px;border-radius:999px;border:1px solid rgba(255,0,200,0.22);background:rgba(255,0,200,0.06);color:var(--accent2);font-size:0.78rem;">Retro-futuro</span>
+        <span style="padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.10);background:rgba(0,0,0,0.10);color:var(--muted);font-size:0.78rem;">Descubre</span>
+      </div>
+    `;
+  }
+
+  overlay.style.display = 'flex';
+}
+
+function runHollowKnightSurprise() {
+  ensureExploreModal();
+  const canvas = document.getElementById('explore-hk-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  canvas.style.display = 'block';
+
+  const DPR = Math.min(2, window.devicePixelRatio || 1);
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = Math.max(1, Math.floor(rect.width * DPR));
+  canvas.height = Math.max(1, Math.floor(rect.height * DPR));
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+  const w = rect.width;
+  const h = rect.height;
+
+  const particles = Array.from({ length: 140 }, () => ({
+    x: Math.random() * w,
+    y: Math.random() * h,
+    r: 0.8 + Math.random() * 2.2,
+    vx: -0.3 + Math.random() * 0.6,
+    vy: -0.9 + Math.random() * 1.6,
+    a: 0.12 + Math.random() * 0.55
+  }));
+
+  const start = performance.now();
+  const duration = 1800;
+
+  function frame(now) {
+    const t = now - start;
+    const k = Math.min(1, t / duration);
+
+    ctx.clearRect(0, 0, w, h);
+
+    // soft vignette
+    const g = ctx.createRadialGradient(w * 0.5, h * 0.55, 40, w * 0.5, h * 0.55, Math.max(w, h) * 0.65);
+    g.addColorStop(0, `rgba(0, 255, 255, ${0.12 * (1 - k)})`);
+    g.addColorStop(0.6, `rgba(10, 10, 18, ${0.14})`);
+    g.addColorStop(1, `rgba(0, 0, 0, ${0.55})`);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+
+    // particles (void fireflies)
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.y < -10) p.y = h + 10;
+      if (p.x < -10) p.x = w + 10;
+      if (p.x > w + 10) p.x = -10;
+
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(0, 255, 255, ${p.a * (1 - k * 0.15)})`;
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // glyph
+    ctx.save();
+    ctx.translate(w * 0.5, h * 0.55);
+    ctx.globalAlpha = 0.95 * (1 - Math.max(0, k - 0.85) / 0.15);
+    ctx.strokeStyle = `rgba(255, 255, 255, 0.55)`;
+    ctx.lineWidth = 1.2;
+    ctx.shadowBlur = 18;
+    ctx.shadowColor = 'rgba(0,255,255,0.55)';
+
+    const s = 0.75 + k * 0.3;
+    ctx.scale(s, s);
+    ctx.beginPath();
+    ctx.moveTo(0, -70);
+    ctx.bezierCurveTo(55, -60, 55, 40, 0, 70);
+    ctx.bezierCurveTo(-55, 40, -55, -60, 0, -70);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(-18, -25);
+    ctx.lineTo(-32, -10);
+    ctx.lineTo(-18, 5);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(18, -25);
+    ctx.lineTo(32, -10);
+    ctx.lineTo(18, 5);
+    ctx.stroke();
+
+    ctx.restore();
+
+    if (t < duration) requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
+}
 
 // Función para renderizar items de Explorar
 function renderExploreItems(items) {
@@ -395,6 +629,8 @@ function renderExploreItems(items) {
       <h3>${icon} ${item.title}</h3>
       <p>${item.desc}</p>
     `;
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => showExploreModal(item));
     grid.appendChild(card);
   });
 }
