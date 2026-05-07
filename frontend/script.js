@@ -652,7 +652,7 @@ function loadMasSection() {
     })
     .catch(err => console.error('Error cargando Más/Auth:', err));
 }
-let createCssLoaded = false;
+
 
 function loadCreateSection() {
   const mainEl = document.querySelector('.main-content');
