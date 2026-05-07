@@ -60,6 +60,37 @@ const conversations = [
 
 let currentChat = null;
 
+function initMensajeria() {
+  // Evitar doble inicialización si se llama varias veces en SPA
+  const root = document.querySelector('.messaging-section');
+  if (root && root.dataset && root.dataset.initialized === 'true') return;
+  if (root && root.dataset) root.dataset.initialized = 'true';
+
+  const searchInput = document.getElementById('search-conversations');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      renderConversations(e.target.value);
+    });
+  }
+
+  const sendBtn = document.getElementById('send-btn');
+  if (sendBtn) {
+    sendBtn.addEventListener('click', sendMessage);
+  }
+
+  const messageInput = document.getElementById('message-input');
+  if (messageInput) {
+    messageInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+  }
+
+  // Renderizar conversaciones iniciales
+  renderConversations();
+}
+
 // Renderizar lista de conversaciones
 function renderConversations(filter = '') {
   const list = document.getElementById('conversations-list');
@@ -157,29 +188,9 @@ function sendMessage() {
   }, 1000);
 }
 
-// Event listeners
-document.addEventListener('DOMContentLoaded', () => {
-  const searchInput = document.getElementById('search-conversations');
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      renderConversations(e.target.value);
-    });
-  }
-
-  const sendBtn = document.getElementById('send-btn');
-  if (sendBtn) {
-    sendBtn.addEventListener('click', sendMessage);
-  }
-
-  const messageInput = document.getElementById('message-input');
-  if (messageInput) {
-    messageInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        sendMessage();
-      }
-    });
-  }
-
-  // Renderizar conversaciones iniciales
-  renderConversations();
-});
+// Inicializar (soporta carga dinámica via SPA)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initMensajeria);
+} else {
+  initMensajeria();
+}
