@@ -436,13 +436,13 @@ function loadExploreSection() {
   if (!exploreCssLoaded) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'explorar/styles.css';
+    link.href = '/explorar/styles.css';
     document.head.appendChild(link);
     exploreCssLoaded = true;
   }
 
   // Cargar el HTML fragmento de Explorar
-  fetch('explorar/index.html')
+  fetch('/explorar/index.html')
     .then(res => res.text())
     .then(html => {
       // Insertar el contenido (sin etiquetas html/body)
@@ -467,22 +467,33 @@ function loadMessagingSection() {
   if (!messagingCssLoaded) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'mensajeria/styles.css';
+    link.href = '/mensajeria/styles.css';
     document.head.appendChild(link);
     messagingCssLoaded = true;
   }
 
   // Cargar el HTML fragmento de Mensajería
-  fetch('mensajeria/index.html')
+  fetch('/mensajeria/index.html')
     .then(res => res.text())
     .then(html => {
       // Insertar el contenido
       mainEl.innerHTML = html;
 
       // Cargar el script de mensajería
+<<<<<<< Updated upstream
       const script = document.createElement('script');
       script.src = 'mensajeria/script.js';
       document.body.appendChild(script);
+=======
+      if (!messagingScriptLoaded) {
+        const script = document.createElement('script');
+        script.src = '/mensajeria/script.js';
+        document.body.appendChild(script);
+        messagingScriptLoaded = true;
+      } else if (typeof initMensajeria === 'function') {
+        initMensajeria();
+      }
+>>>>>>> Stashed changes
     })
     .catch(err => console.error('Error cargando Mensajería:', err));
 }
@@ -497,22 +508,33 @@ function loadNotificationsSection() {
   if (!notificationsCssLoaded) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'notificaciones/styles.css';
+    link.href = '/notificaciones/styles.css';
     document.head.appendChild(link);
     notificationsCssLoaded = true;
   }
 
   // Cargar el HTML fragmento de Notificaciones
-  fetch('notificaciones/index.html')
+  fetch('/notificaciones/index.html')
     .then(res => res.text())
     .then(html => {
       // Insertar el contenido
       mainEl.innerHTML = html;
 
       // Cargar el script de notificaciones
+<<<<<<< Updated upstream
       const script = document.createElement('script');
       script.src = 'notificaciones/script.js';
       document.body.appendChild(script);
+=======
+      if (!notificationsScriptLoaded) {
+        const script = document.createElement('script');
+        script.src = '/notificaciones/script.js';
+        document.body.appendChild(script);
+        notificationsScriptLoaded = true;
+      } else if (typeof initNotificaciones === 'function') {
+        initNotificaciones();
+      }
+>>>>>>> Stashed changes
     })
     .catch(err => console.error('Error cargando Notificaciones:', err));
 }
@@ -527,22 +549,33 @@ function loadProfileSection() {
   if (!profileCssLoaded) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'perfil/styles.css';
+    link.href = '/perfil/styles.css';
     document.head.appendChild(link);
     profileCssLoaded = true;
   }
 
   // Cargar el HTML fragmento de Perfil
-  fetch('perfil/index.html')
+  fetch('/perfil/index.html')
     .then(res => res.text())
     .then(html => {
       // Insertar el contenido
       mainEl.innerHTML = html;
 
       // Cargar el script de perfil
+<<<<<<< Updated upstream
       const script = document.createElement('script');
       script.src = 'perfil/script.js';
       document.body.appendChild(script);
+=======
+      if (!profileScriptLoaded) {
+        const script = document.createElement('script');
+        script.src = '/perfil/script.js';
+        document.body.appendChild(script);
+        profileScriptLoaded = true;
+      } else if (typeof initializeProfile === 'function') {
+        initializeProfile();
+      }
+>>>>>>> Stashed changes
     })
     .catch(err => console.error('Error cargando Perfil:', err));
 }
@@ -572,13 +605,13 @@ function loadAuthIntoLanding() {
   if (!authCssLoaded) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'auth/styles.css';
+    link.href = '/auth/styles.css';
     document.head.appendChild(link);
     authCssLoaded = true;
   }
 
   // Cargar el HTML fragmento de Auth
-  fetch('auth/index.html')
+  fetch('/auth/index.html')
     .then(res => res.text())
     .then(html => {
       landingEl.innerHTML = html;
@@ -589,7 +622,7 @@ function loadAuthIntoLanding() {
       if (oldScript) oldScript.remove();
 
       const script = document.createElement('script');
-      script.src = 'auth/script.js';
+      script.src = '/auth/script.js';
       script.id = 'auth-script';
       document.body.appendChild(script);
     })
@@ -610,7 +643,7 @@ function loadMasSection() {
   if (!masCssLoaded) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'auth/styles.css';
+    link.href = '/auth/styles.css';
     document.head.appendChild(link);
     masCssLoaded = true;
   }
@@ -639,14 +672,14 @@ function loadMasSection() {
   }
 
   // No logueado: mostrar formulario de Iniciar sesión / Registrarse
-  fetch('auth/index.html')
+  fetch('/auth/index.html')
     .then(res => res.text())
     .then(html => {
       mainEl.innerHTML = '<div class="mas-section"><h1>Más</h1><p class="subtitle">Inicia sesión o regístrate cuando quieras</p>' + html + '</div>';
       const oldScript = document.getElementById('auth-script');
       if (oldScript) oldScript.remove();
       const script = document.createElement('script');
-      script.src = 'auth/script.js';
+      script.src = '/auth/script.js';
       script.id = 'auth-script';
       document.body.appendChild(script);
     })
@@ -662,22 +695,33 @@ function loadCreateSection() {
   if (!createCssLoaded) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'crear/styles.css';
+    link.href = '/crear/styles.css';
     document.head.appendChild(link);
     createCssLoaded = true;
   }
 
   // Cargar el HTML fragmento de Crear
-  fetch('crear/index.html')
+  fetch('/crear/index.html')
     .then(res => res.text())
     .then(html => {
       // Insertar el contenido
       mainEl.innerHTML = html;
 
       // Cargar el script de crear
+<<<<<<< Updated upstream
       const script = document.createElement('script');
       script.src = 'crear/script.js';
       document.body.appendChild(script);
+=======
+      if (!createScriptLoaded) {
+        const script = document.createElement('script');
+        script.src = '/crear/script.js';
+        document.body.appendChild(script);
+        createScriptLoaded = true;
+      } else if (typeof initializeCreate === 'function') {
+        initializeCreate();
+      }
+>>>>>>> Stashed changes
     })
     .catch(err => console.error('Error cargando Crear:', err));
 }
