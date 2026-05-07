@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const pool = require('./db');
+const path = require('path');
 
 
 // Datos simulados (movidos desde el frontend)
@@ -189,6 +190,20 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/posts', require('./routes/posts'));
 app.use('/api/users', require('./routes/users'));
+
+// Servir frontend estático (para abrir la web desde la URL del backend en Render)
+const FRONTEND_DIR = path.join(__dirname, '..', 'frontend');
+app.use(express.static(FRONTEND_DIR));
+
+// Home
+app.get('/', (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'index.html'));
+});
+
+// Fallback: cualquier ruta que no sea /api => index.html (SPA)
+app.get(/^\/(?!api\/).*/, (req, res) => {
+  res.sendFile(path.join(FRONTEND_DIR, 'index.html'));
+});
 
 app.get('/api/test', async (req, res) => {
   try {
