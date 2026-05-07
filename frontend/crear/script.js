@@ -194,17 +194,25 @@ function publishPost() {
     ? 'http://localhost:3000/api/posts'
     : (isVercel ? 'https://testing-ivmx.onrender.com/api/posts' : '/api/posts');
 
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert('Necesitas iniciar sesión para publicar. Ve a "Más" e inicia sesión.');
+    if (typeof loadMasSection === 'function') loadMasSection();
+    return;
+  }
+
   fetch(API_URL, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-auth-token': localStorage.getItem('token') // Token de autenticación
-    },
+    headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
     body: JSON.stringify(postData)
   })
-    .then(res => {
-      if (!res.ok) throw new Error('Error publicando post');
-      return res.json();
+    .then(async (res) => {
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        const backendMsg = data?.msg || data?.error || data?.message || '';
+        throw new Error(`${res.status} ${res.statusText}${backendMsg ? ` - ${backendMsg}` : ''}`);
+      }
+      return data;
     })
     .then(newPost => {
       showSuccessMessage();
