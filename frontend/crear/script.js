@@ -2,12 +2,16 @@
 let gameImageURL = '';
 let movieImageURL = '';
 
-// Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', initializeCreate);
-
 function initializeCreate() {
   setupImageUploads();
   setupFormEvents();
+}
+
+// Inicializar (soporta carga dinámica via SPA)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeCreate);
+} else {
+  initializeCreate();
 }
 
 // Manejo de cargas de imagen
@@ -182,9 +186,13 @@ function publishPost() {
   };
 
   // Enviar al Backend
-  const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  // - Si el frontend está servido por el mismo backend (Render): usar ruta relativa.
+  // - Si el frontend está en Vercel u otro host: usar el backend de Render.
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const isVercel = window.location.hostname.endsWith('vercel.app');
+  const API_URL = isLocal
     ? 'http://localhost:3000/api/posts'
-    : 'https://testing-ivmx.onrender.com/api/posts';
+    : (isVercel ? 'https://testing-ivmx.onrender.com/api/posts' : '/api/posts');
 
   fetch(API_URL, {
     method: 'POST',
@@ -199,18 +207,19 @@ function publishPost() {
       return res.json();
     })
     .then(newPost => {
-      // Agregar visualmente (opcional si recargamos)
-      if (typeof posts !== 'undefined') {
-        posts.unshift(newPost);
-      }
       showSuccessMessage();
       document.getElementById('create-post-form').reset();
       gameImageURL = '';
       movieImageURL = '';
 
       setTimeout(() => {
-        const homeBtn = document.querySelector('[title="Inicio"]');
-        if (homeBtn) homeBtn.click();
+        // Si existe función para restaurar inicio y refrescar, úsala.
+        if (typeof restoreHomeSection === 'function') {
+          restoreHomeSection();
+        } else {
+          const homeBtn = document.querySelector('[title="Inicio"]');
+          if (homeBtn) homeBtn.click();
+        }
       }, 2000);
     })
     .catch(err => {
