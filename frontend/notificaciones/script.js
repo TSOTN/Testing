@@ -164,8 +164,14 @@ function setupFilters() {
   });
 }
 
-// Inicializar
-document.addEventListener('DOMContentLoaded', () => {
+function initNotificaciones() {
   setupFilters();
   renderNotifications();
-});
+}
+
+// Inicializar (soporta carga dinámica via SPA)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initNotificaciones);
+} else {
+  initNotificaciones();
+}
