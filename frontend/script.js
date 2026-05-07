@@ -458,6 +458,7 @@ function loadExploreSection() {
 }
 
 let messagingCssLoaded = false;
+let messagingScriptLoaded = false;
 
 function loadMessagingSection() {
   const mainEl = document.querySelector('.main-content');
@@ -480,11 +481,6 @@ function loadMessagingSection() {
       mainEl.innerHTML = html;
 
       // Cargar el script de mensajería
-<<<<<<< Updated upstream
-      const script = document.createElement('script');
-      script.src = 'mensajeria/script.js';
-      document.body.appendChild(script);
-=======
       if (!messagingScriptLoaded) {
         const script = document.createElement('script');
         script.src = '/mensajeria/script.js';
@@ -493,12 +489,12 @@ function loadMessagingSection() {
       } else if (typeof initMensajeria === 'function') {
         initMensajeria();
       }
->>>>>>> Stashed changes
     })
     .catch(err => console.error('Error cargando Mensajería:', err));
 }
 
 let notificationsCssLoaded = false;
+let notificationsScriptLoaded = false;
 
 function loadNotificationsSection() {
   const mainEl = document.querySelector('.main-content');
@@ -521,11 +517,6 @@ function loadNotificationsSection() {
       mainEl.innerHTML = html;
 
       // Cargar el script de notificaciones
-<<<<<<< Updated upstream
-      const script = document.createElement('script');
-      script.src = 'notificaciones/script.js';
-      document.body.appendChild(script);
-=======
       if (!notificationsScriptLoaded) {
         const script = document.createElement('script');
         script.src = '/notificaciones/script.js';
@@ -534,12 +525,12 @@ function loadNotificationsSection() {
       } else if (typeof initNotificaciones === 'function') {
         initNotificaciones();
       }
->>>>>>> Stashed changes
     })
     .catch(err => console.error('Error cargando Notificaciones:', err));
 }
 
 let profileCssLoaded = false;
+let profileScriptLoaded = false;
 
 function loadProfileSection() {
   const mainEl = document.querySelector('.main-content');
@@ -562,11 +553,6 @@ function loadProfileSection() {
       mainEl.innerHTML = html;
 
       // Cargar el script de perfil
-<<<<<<< Updated upstream
-      const script = document.createElement('script');
-      script.src = 'perfil/script.js';
-      document.body.appendChild(script);
-=======
       if (!profileScriptLoaded) {
         const script = document.createElement('script');
         script.src = '/perfil/script.js';
@@ -575,12 +561,12 @@ function loadProfileSection() {
       } else if (typeof initializeProfile === 'function') {
         initializeProfile();
       }
->>>>>>> Stashed changes
     })
     .catch(err => console.error('Error cargando Perfil:', err));
 }
 
 let createCssLoaded = false;
+let createScriptLoaded = false;
 
 // --- Auth System Integration ---
 
@@ -708,11 +694,6 @@ function loadCreateSection() {
       mainEl.innerHTML = html;
 
       // Cargar el script de crear
-<<<<<<< Updated upstream
-      const script = document.createElement('script');
-      script.src = 'crear/script.js';
-      document.body.appendChild(script);
-=======
       if (!createScriptLoaded) {
         const script = document.createElement('script');
         script.src = '/crear/script.js';
@@ -721,7 +702,6 @@ function loadCreateSection() {
       } else if (typeof initializeCreate === 'function') {
         initializeCreate();
       }
->>>>>>> Stashed changes
     })
     .catch(err => console.error('Error cargando Crear:', err));
 }
