@@ -185,6 +185,16 @@ function publishPost() {
     backImg: movieImageURL || 'https://via.placeholder.com/400x250/111122/ff00c8?text=Movie'
   };
 
+  // Evitar payloads enormes si el usuario sube imágenes muy grandes (base64)
+  const MAX_DATA_URL_CHARS = 1_500_000; // ~1.5MB en texto (aprox). Ajusta si quieres.
+  const tooBig =
+    (typeof postData.frontImg === 'string' && postData.frontImg.startsWith('data:') && postData.frontImg.length > MAX_DATA_URL_CHARS) ||
+    (typeof postData.backImg === 'string' && postData.backImg.startsWith('data:') && postData.backImg.length > MAX_DATA_URL_CHARS);
+  if (tooBig) {
+    alert('La imagen subida pesa demasiado. Usa una URL (por ejemplo de Steam/IMDb) o una imagen más ligera.');
+    return;
+  }
+
   // Enviar al Backend
   // - Si el frontend está servido por el mismo backend (Render): usar ruta relativa.
   // - Si el frontend está en Vercel u otro host: usar el backend de Render.
