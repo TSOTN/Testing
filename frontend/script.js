@@ -403,12 +403,12 @@ const exploreData = [
   { type: 'juego', title: 'Hollow Knight', img: 'https://steamcdn-a.akamaihd.net/steam/apps/367520/header.jpg', desc: 'Metroidvania sombrío y preciso.' },
   { type: 'pelicula', title: 'Akira', img: 'https://upload.wikimedia.org/wikipedia/en/5/5d/AKIRA_%281988_poster%29.jpg', desc: 'Clásico anime cyberpunk.' },
   { type: 'juego', title: 'Ori and the Blind Forest', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/387290/header.jpg', desc: 'Plataformas y emoción.' },
-  { type: 'pelicula', title: 'Ghost in the Shell', img: 'https://upload.wikimedia.org/wikipedia/en/3/3e/Ghost_in_the_Shell_%281995_film%29_poster.jpg', desc: 'Identidad y tecnología.' },
+  { type: 'pelicula', title: 'Ghost in the Shell', img: 'https://upload.wikimedia.org/wikipedia/en/c/ca/Ghostintheshellposter.jpg', desc: 'Identidad y tecnología.' },
   { type: 'juego', title: 'Celeste', img: 'https://cdn.akamai.steamstatic.com/steam/apps/504230/header.jpg', desc: 'Plataformas desafiantes.' },
-  { type: 'pelicula', title: 'Paprika', img: 'https://upload.wikimedia.org/wikipedia/en/0/0f/Paprikaanimeposter.jpg', desc: 'Sueños y realidad entrelazados.' },
+  { type: 'pelicula', title: 'Paprika', img: 'https://upload.wikimedia.org/wikipedia/en/1/16/Paprikaposter.jpg', desc: 'Sueños y realidad entrelazados.' },
   { type: 'serie', title: 'Stranger Things', img: 'https://m.media-amazon.com/images/M/MV5BMDZkYmVhNjMtNWU4MC00MDQxLWE3MjYtZGMzZWI1ZjhlOWJmXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg', desc: 'Misterio ochentero, terror y amistad en Hawkins.' },
   { type: 'serie', title: 'Attack on Titan', img: 'https://m.media-amazon.com/images/M/MV5BZjliODY5MzQtMmViZC00MTZmLWFhMWMtMjMwM2I3OGY1MTRiXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg', desc: 'Titanes, guerra y giros brutales. Épica total.' },
-  { type: 'serie', title: 'Black Mirror', img: 'https://m.media-amazon.com/images/M/MV5BNGQ3MGU4ZTYtYzY0My00MzZkLWFiNGMtMTE4NTA5ODQxN2Y2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg', desc: 'Tecnología + dilemas morales en episodios autoconclusivos.' }
+  { type: 'serie', title: 'Black Mirror', img: 'https://static.tvmaze.com/uploads/images/original_untouched/564/1411764.jpg', desc: 'Tecnología + dilemas morales en episodios autoconclusivos.' }
 ];
 
 function ensureExploreModal() {
