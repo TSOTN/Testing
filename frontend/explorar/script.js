@@ -5,7 +5,7 @@ const exploreData = [
   { type: 'juego', title: 'Hollow Knight', img: 'https://steamcdn-a.akamaihd.net/steam/apps/367520/header.jpg', desc: 'Metroidvania sombrío y preciso.' },
   { type: 'pelicula', title: 'Akira', img: 'https://m.media-amazon.com/images/M/MV5BM2M0MzYwZmQtYjE5ZC00YzMyLWJkYWYtZTAxNzQzN2ZjYjA3XkEyXkFqcGdeQXVyMTQxNzMzNTI@._V1_.jpg', desc: 'Clásico anime cyberpunk.' },
   { type: 'juego', title: 'Ori and the Blind Forest', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/387290/header.jpg', desc: 'Plataformas y emoción.' },
-  { type: 'pelicula', title: 'Your Name', img: 'https://m.media-amazon.com/images/M/MV5BNmEwYTBhMzEtNWU4MC00NWJlLWE0NDYtODI2OTQyNzU2MzA1XkEyXkFqcGdeQXVyNDg4NjY4Nzk@._V1_.jpg', desc: 'Destino, magia y un amor atemporal.' },
+  { type: 'pelicula', title: 'Your Name', img: 'https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png', desc: 'Destino, magia y un amor atemporal.' },
   { type: 'juego', title: 'Celeste', img: 'https://cdn.akamai.steamstatic.com/steam/apps/504230/header.jpg', desc: 'Plataformas desafiantes.' },
   { type: 'pelicula', title: 'Paprika', img: 'https://m.media-amazon.com/images/M/MV5BNjc5NDk3NjUtNWNhMy00MDA1LTljNTgtNDI0YTAyMjY3MzY1XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg', desc: 'Sueños y realidad entrelazados.' }
 ];
