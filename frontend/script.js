@@ -329,6 +329,16 @@ async function initApp() {
     const postsUrl = userId ? `/api/posts?user_id=${userId}` : '/api/posts';
     posts = await fetchWithFallback(postsUrl);
     console.log(`📦 Posts cargados: ${posts.length} posts recibidos del backend`);
+
+    // Si el backend responde pero no hay posts, usamos los de prueba
+    if (posts.length === 0) {
+      console.log('📋 Base de datos vacía. Cargando datos de prueba (mock data)...');
+      posts = [
+        { author: '@Invitado', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=1', timestamp: 'Hace 2h', frontImg: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg', frontTitle: 'Cyberpunk 2077', frontDesc: 'RPG de mundo abierto en un futuro distópico.', backImg: 'https://m.media-amazon.com/images/M/MV5BMDk4MTNhNGMtZTE2Ni00MTIxLTk2NzUtYjI1ZWM5NmRkODM5XkEyXkFqcGdeQXVyODc0OTEyNDU@._V1_.jpg', backTitle: 'Blade Runner 2049', backDesc: 'Un nuevo blade runner descubre un secreto mucho tiempo enterrado.', liked: false, likes: 124, comments: 45 },
+        { author: '@Invitado', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=2', timestamp: 'Hace 5h', frontImg: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg', frontTitle: 'Red Dead Redemption 2', frontDesc: 'Épica historia de forajidos en el corazón de América.', backImg: 'https://m.media-amazon.com/images/M/MV5BMjA5ZjA3ZjMtMzA2ZC00ZGY5LTg3ZTEtMDQ0MjEzNWYxMjFjXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg', backTitle: 'The Hateful Eight', backDesc: 'Ocho extraños atrapados en una cabaña durante una tormenta.', liked: true, likes: 892, comments: 120 },
+        { author: '@Invitado', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=3', timestamp: 'Hace 1d', frontImg: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/374320/header.jpg', frontTitle: 'Dark Souls III', frontDesc: 'Desafía a la oscuridad en este RPG de acción aclamado.', backImg: 'https://m.media-amazon.com/images/M/MV5BNDQ2ZGRhYjYtYjBmYy00ZjBiLTg3ZDktOTRlYzIwMWNhMjgwXkEyXkFqcGdeQXVyNjE5MjUyOTM@._V1_.jpg', backTitle: 'Berserk (1997)', backDesc: 'La historia de Guts y su búsqueda de venganza en un mundo oscuro.', liked: false, likes: 567, comments: 89 }
+      ];
+    }
     renderFeed();
 
     data = await fetchWithFallback('/api/recommendations');
