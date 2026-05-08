@@ -403,7 +403,7 @@ const exploreData = [
   { type: 'juego', title: 'Hollow Knight', img: 'https://steamcdn-a.akamaihd.net/steam/apps/367520/header.jpg', desc: 'Metroidvania sombrío y preciso.' },
   { type: 'pelicula', title: 'Akira', img: 'https://upload.wikimedia.org/wikipedia/en/5/5d/AKIRA_%281988_poster%29.jpg', desc: 'Clásico anime cyberpunk.' },
   { type: 'juego', title: 'Ori and the Blind Forest', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/387290/header.jpg', desc: 'Plataformas y emoción.' },
-  { type: 'pelicula', title: 'Your Name', img: 'https://images.justwatch.com/poster/250568/s718/your-name.jpg', desc: 'Destino, magia y un amor atemporal.' },
+  { type: 'pelicula', title: 'Your Name', img: 'https://m.media-amazon.com/images/M/MV5BNmEwYTBhMzEtNWU4MC00NWJlLWE0NDYtODI2OTQyNzU2MzA1XkEyXkFqcGdeQXVyNDg4NjY4Nzk@._V1_.jpg', desc: 'Destino, magia y un amor atemporal.' },
   { type: 'juego', title: 'Celeste', img: 'https://cdn.akamai.steamstatic.com/steam/apps/504230/header.jpg', desc: 'Plataformas desafiantes.' },
   { type: 'pelicula', title: 'Paprika', img: 'https://upload.wikimedia.org/wikipedia/en/1/16/Paprikaposter.jpg', desc: 'Sueños y realidad entrelazados.' },
   { type: 'serie', title: 'Stranger Things', img: 'https://m.media-amazon.com/images/M/MV5BMDZkYmVhNjMtNWU4MC00MDQxLWE3MjYtZGMzZWI1ZjhlOWJmXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_.jpg', desc: 'Misterio ochentero, terror y amistad en Hawkins.' },
